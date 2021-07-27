@@ -49,12 +49,27 @@
                 CategoryId = product.CategoryId
             };
 
+            this.data.Add(productData);
+            this.data.SaveChanges();
+
             return RedirectToAction(nameof(All));
 
         }
+
         public IActionResult All()
         {
-            return View();
+            var allProducts = this.data.Products.Select(p => new AllProductListingViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                ImageUrl = p.ImageUrl,
+                OrderingNumber = p.OrderingNumber,
+                CategoryId = p.CategoryId
+            }).ToList();
+
+            return View(allProducts);
         }
 
         private IEnumerable<ProductCategoriesViewModel> GetCategories()
