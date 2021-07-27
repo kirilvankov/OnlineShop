@@ -23,7 +23,7 @@ namespace Exam_Project
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ProjectDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -35,7 +35,7 @@ namespace Exam_Project
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ProjectDbContext>();
             services.AddControllersWithViews();
         }
 
