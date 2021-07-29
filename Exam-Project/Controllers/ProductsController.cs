@@ -18,47 +18,39 @@
             this.data = data;
         }
 
-        public IActionResult Add()
-        {
+        
 
-            return View(new AddProductFormModel
-            {
-                Categories = GetCategories()
-            });
-        }
+        
 
-        [HttpPost]
-        public IActionResult Add(AddProductFormModel product)
+        public IActionResult All(ProductQueryViewModel product)
         {
-            if (!CategoryExist(product.CategoryId))
+            var productQuery = this.data.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(product.Name))
             {
-                ModelState.AddModelError("Category", "Invalid Category");
-            }
-            if (!ModelState.IsValid)
-            {
-                product.Categories = GetCategories();
-                return View(product);
+                productQuery = productQuery.Where(p => p.Name == product.Name);
             }
 
-            var productData = new Product
+            if (!string.IsNullOrWhiteSpace(product.SearchTerm))
             {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                ImageUrl = product.ImageUrl,
-                CategoryId = product.CategoryId
+                productQuery = productQuery.Where(p => p.Name.ToLower().Contains(product.SearchTerm.ToLower()) ||
+                                                  p.Description.ToLower().Contains(product.SearchTerm.ToLower()));
+            }
+            if (product.CategoryId != 0)
+            {
+                productQuery = productQuery.Where(p => p.CategoryId == product.CategoryId);
+            }
+
+            productQuery = product.Sorting switch
+            {
+                Sorting.Price => productQuery.OrderBy(p => p.Price),
+                Sorting.Name => productQuery.OrderBy(p => p.Name),
+                Sorting.Latest or _ => productQuery.OrderByDescending(p => p.Id),
             };
 
-            this.data.Add(productData);
-            this.data.SaveChanges();
 
-            return RedirectToAction(nameof(All));
 
-        }
-
-        public IActionResult All()
-        {
-            var allProducts = this.data.Products.Select(p => new AllProductListingViewModel
+            var allProducts = this.data.Products.Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -72,15 +64,6 @@
             return View(allProducts);
         }
 
-        private IEnumerable<ProductCategoriesViewModel> GetCategories()
-            => this.data.Categories.Select(c => new ProductCategoriesViewModel
-            {
-                Id = c.Id,
-                Name = c.Name,
-                ParentId = c.ParentId
-            }).ToList();
-
-        private bool CategoryExist(int categoryId)
-            => this.data.Categories.Any(c => c.Id == categoryId);
+        
     }
 }

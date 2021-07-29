@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Models.Products
+﻿namespace Exam_Project.Areas.Admin.Models.Products
 {
 
     using System.ComponentModel.DataAnnotations;

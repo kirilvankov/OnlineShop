@@ -1,7 +1,7 @@
 ﻿namespace Exam_Project.Models.Products
 {
    
-    public class AllProductListingViewModel
+    public class ProductViewModel
     {
         public int Id { get; set; }
 
