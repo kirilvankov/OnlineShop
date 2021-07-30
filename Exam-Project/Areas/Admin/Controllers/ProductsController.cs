@@ -19,20 +19,34 @@
             this.data = data;
         }
 
-        public IActionResult All()
+        public IActionResult All([FromQuery]AdminProductViewModel query)
         {
-            var products = this.data.Products.Select(p => new ProductViewModel
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price,
-                ImageUrl = p.ImageUrl,
-                OrderingNumber = p.OrderingNumber,
-                CategoryId = p.CategoryId
-            }).ToList();
+            var productsQuery = this.data.Products.AsQueryable();
+            var totalItems = this.data.Products.Count();
+            var allProducts = productsQuery
+                .Skip((query.CurrentPage - 1) * query.ItemPerPage)
+                .Take(query.ItemPerPage)
+                .Select(p => new ProductViewModel
+                {
 
-            return View(products);
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    OrderingNumber = p.OrderingNumber,
+                    CategoryId = p.CategoryId,
+                
+                }).ToList();
+            
+            return View(new AdminProductViewModel
+            {
+                TotalItems = totalItems,
+                Products = allProducts,
+                CurrentPage = query.CurrentPage,
+                ItemPerPage = query.ItemPerPage,
+                Categories = GetCategories()
+            });
         }
         public IActionResult Add()
         {
@@ -110,7 +124,7 @@
             this.data.SaveChanges();
 
             return RedirectToAction(nameof(All));
-                
+
         }
         private IEnumerable<ProductCategoriesViewModel> GetCategories()
             => this.data.Categories.Select(c => new ProductCategoriesViewModel

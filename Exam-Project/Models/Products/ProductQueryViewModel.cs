@@ -7,6 +7,7 @@
 
     public class ProductQueryViewModel
     {
+        
 
         public string Name { get; set; }
 
@@ -20,9 +21,8 @@
 
         public int TotalItems { get; set; }
 
-        public int CurrentPage { get; set; } = 2;
-
-        public int ItemPerPage { get; set; } = 3;
+        public int CurrentPage { get; init; } = 1;
+        public int ItemPerPage { get; init; } = 3;
 
         public IEnumerable<ProductViewModel> Products { get; set; }
 

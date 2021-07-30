@@ -19,11 +19,7 @@
             this.data = data;
         }
 
-        
-
-        
-
-        public IActionResult All(ProductQueryViewModel query)
+        public IActionResult All([FromQuery]ProductQueryViewModel query)
         {
             var queryProducts = this.data.Products.AsQueryable();
 
@@ -54,7 +50,8 @@
             var totalItems = queryProducts.Count();
 
             var allProducts = queryProducts
-                    
+                    .Skip((query.CurrentPage - 1) * query.ItemPerPage)
+                    .Take(query.ItemPerPage)
                     .Select(p => new ProductViewModel
                     {
                         Id = p.Id,
@@ -70,8 +67,29 @@
             {
                 Products = allProducts,
                 TotalItems = totalItems,
+                CurrentPage = query.CurrentPage,
+                ItemPerPage = query.ItemPerPage,
                 Categories = GetCategories()
-            }) ;
+            });
+
+        }
+        public IActionResult Details(int id)
+        {
+            var product = this.data.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productCategory = this.data.Categories.Find(product.CategoryId);
+
+            return View(new DetailsProductViewModel
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                Category = productCategory.Name
+            });
         }
 
         private IEnumerable<ProductCategoriesViewModel> GetCategories()

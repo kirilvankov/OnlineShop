@@ -1,0 +1,20 @@
+﻿@model DetailsProductViewModel
+
+<div class="row col-md-8 offset-2">
+    <div class="card" >
+        <img src="@Model.ImageUrl" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Price</h5>
+            <p class="card-text">@Model.Description</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@Model.Name</li>
+            <li class="list-group-item">@Model.Category</li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+
+</div>
