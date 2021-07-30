@@ -6,7 +6,7 @@
 
     using static Data.DataConstants.Product;
 
-    public class AddProductFormModel
+    public class ProductFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

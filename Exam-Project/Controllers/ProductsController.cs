@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Exam_Project.Areas.Admin.Models.Products;
     using Exam_Project.Data;
     using Exam_Project.Data.Models;
     using Exam_Project.Models.Products;
@@ -22,48 +23,63 @@
 
         
 
-        public IActionResult All(ProductQueryViewModel product)
+        public IActionResult All(ProductQueryViewModel query)
         {
-            var productQuery = this.data.Products.AsQueryable();
+            var queryProducts = this.data.Products.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(product.Name))
+            if (!string.IsNullOrWhiteSpace(query.Name))
             {
-                productQuery = productQuery.Where(p => p.Name == product.Name);
+                queryProducts = queryProducts.Where(p => p.Name == query.Name);
             }
 
-            if (!string.IsNullOrWhiteSpace(product.SearchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
-                productQuery = productQuery.Where(p => p.Name.ToLower().Contains(product.SearchTerm.ToLower()) ||
-                                                  p.Description.ToLower().Contains(product.SearchTerm.ToLower()));
+                queryProducts = queryProducts.Where(p => p.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                                                  p.Description.ToLower().Contains(query.SearchTerm.ToLower()));
             }
-            if (product.CategoryId != 0)
+            if (query.CategoryId != 0)
             {
-                productQuery = productQuery.Where(p => p.CategoryId == product.CategoryId);
+                queryProducts = queryProducts.Where(p => p.CategoryId == query.CategoryId);
             }
 
-            productQuery = product.Sorting switch
+            queryProducts = query.Sorting switch
             {
-                Sorting.Price => productQuery.OrderBy(p => p.Price),
-                Sorting.Name => productQuery.OrderBy(p => p.Name),
-                Sorting.Latest or _ => productQuery.OrderByDescending(p => p.Id),
+                Sorting.Price => queryProducts.OrderBy(p => p.Price),
+                Sorting.Name => queryProducts.OrderBy(p => p.Name),
+                Sorting.Latest or _ => queryProducts.OrderByDescending(p => p.Id),
             };
 
+            
 
+            var totalItems = queryProducts.Count();
 
-            var allProducts = this.data.Products.Select(p => new ProductViewModel
+            var allProducts = queryProducts
+                    
+                    .Select(p => new ProductViewModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Description = p.Description,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl,
+                        OrderingNumber = p.OrderingNumber,
+                        CategoryId = p.CategoryId
+                    }).ToList();
+
+            return View(new ProductQueryViewModel
             {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price,
-                ImageUrl = p.ImageUrl,
-                OrderingNumber = p.OrderingNumber,
-                CategoryId = p.CategoryId
-            }).ToList();
-
-            return View(allProducts);
+                Products = allProducts,
+                TotalItems = totalItems,
+                Categories = GetCategories()
+            }) ;
         }
 
-        
+        private IEnumerable<ProductCategoriesViewModel> GetCategories()
+            => this.data.Categories.Select(c => new ProductCategoriesViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                ParentId = c.ParentId
+            }).ToList();
     }
 }

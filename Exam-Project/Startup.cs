@@ -11,6 +11,7 @@ namespace Exam_Project
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Exam_Project.Data.Infrastructure;
 
     public class Startup
     {
@@ -35,13 +36,16 @@ namespace Exam_Project
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectDbContext>();
             services.AddControllersWithViews();
+            
         }
 
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareAdmin();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

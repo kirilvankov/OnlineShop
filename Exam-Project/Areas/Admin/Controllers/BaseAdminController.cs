@@ -4,10 +4,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area("Admin")]
-    [Authorize()] // TODO: Add roleName
+    [Area(AdminConstants.AreaName)]
+    [Authorize(Roles =(AdminConstants.AdministratorRoleName))] 
     public class BaseAdminController : Controller
     {
-  
     }
 }
