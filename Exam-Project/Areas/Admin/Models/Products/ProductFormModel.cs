@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     using static Data.DataConstants.Product;
 
     public class ProductFormModel
@@ -19,10 +21,11 @@
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        [Url]
-        [Display(Name = "Image Url")]
-        public string ImageUrl { get; set; }
+
+        [Display(Name = "Image")]
+        public IFormFile Image { get; set; }
+
+        public string ImageName { get; set; }
 
         [Display(Name="Category")]
         public int CategoryId { get; set; }

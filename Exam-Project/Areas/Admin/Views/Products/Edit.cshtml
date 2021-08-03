@@ -1,6 +1,6 @@
 ﻿@model ProductFormModel
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <h2 class="text-center">Edit Product</h2>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
@@ -18,10 +18,17 @@
         <input asp-for="Price" class="form-control" placeholder="0.00">
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+    @if (Model.ImageName != null)
+    {
+        <div class="form-group">
+            <label asp-for="ImageName"></label>
+            <input asp-for="ImageName" class="form-control" placeholder="0.00">
+        </div>
+    }
     <div class="form-group">
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" placeholder="Image...">
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <label asp-for="Image"></label>
+        <input type="file" name="Image" asp-for="Image" class="form-control" placeholder="Image...">
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="CategoryId"></label>
