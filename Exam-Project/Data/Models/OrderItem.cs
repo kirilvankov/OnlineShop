@@ -20,7 +20,7 @@
         public decimal ProductPrice { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 1;
 
         public int ProductId { get; set; }
 

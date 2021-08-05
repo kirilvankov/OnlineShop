@@ -12,6 +12,7 @@ namespace Exam_Project
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Exam_Project.Data.Infrastructure;
+    using Exam_Project.Data.Models;
 
     public class Startup
     {
@@ -29,7 +30,7 @@ namespace Exam_Project
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;

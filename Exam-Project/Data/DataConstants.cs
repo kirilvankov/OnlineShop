@@ -7,6 +7,13 @@
 
     public class DataConstants
     {
+        public class User
+        {
+            public const int UserMinLength = 2;
+            public const int FirstNameMaxLength = 25;
+            public const int LastNameMaxLength = 30;
+            public const int AddressMaxLength = 100;
+        }
         public class Product
         {
             public const int NameMinLength = 2;

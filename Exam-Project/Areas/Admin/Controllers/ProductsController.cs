@@ -2,21 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using FileSystem = System.IO;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using Exam_Project.Areas.Admin.Models.Products;
     using Exam_Project.Data;
     using Exam_Project.Data.Models;
     using Exam_Project.Models.Products;
 
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
 
-    using static System.Net.Mime.MediaTypeNames;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ProductsController : BaseAdminController
     {
@@ -68,7 +63,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ProductFormModel product /*, IFormFile file*/)
+        public IActionResult Add(ProductFormModel product /*, IFormFile file*/)
         {
             if (product.Image == null)
             {
@@ -144,16 +139,21 @@
 
             var editedProduct = this.data.Products.Where(p => p.Id == id).FirstOrDefault();
 
+            if (editedProduct == null)
+            {
+                return NotFound();
+            }
+
             if (product.Image != null)
             {
-                var uploadedFolder = Path.Combine(this.env.WebRootPath, "media");
-                var filePath = Path.Combine(uploadedFolder, product.ImageName);
+                var uploadedFolder = FileSystem.Path.Combine(this.env.WebRootPath, "media");
+                var filePath = FileSystem.Path.Combine(uploadedFolder, product.ImageName);
 
-                if (System.IO.File.Exists(filePath))
+                if (FileSystem.File.Exists(filePath))
                 {
                     try
                     {
-                        System.IO.File.Delete(filePath);
+                        FileSystem.File.Delete(filePath);
 
                     }
                     catch (Exception e)
@@ -194,12 +194,12 @@
 
             if (product.Image != null)
             {
-                var uploadedFolder = Path.Combine(this.env.WebRootPath, "media");
+                var uploadedFolder = FileSystem.Path.Combine(this.env.WebRootPath, "media");
                 imageFile = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
 
-                var filePath = Path.Combine(uploadedFolder, imageFile);
+                var filePath = FileSystem.Path.Combine(uploadedFolder, imageFile);
 
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                using (FileSystem.FileStream fs = new FileSystem.FileStream(filePath, FileSystem.FileMode.Create))
                 {
                     product.Image.CopyTo(fs);
                 }

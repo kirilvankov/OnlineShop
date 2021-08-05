@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Exam_Project.Areas.Admin;
+    using Exam_Project.Data.Models;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@
         }
         private static void SeedAdministrator(IServiceProvider service)
         {
-            var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = service.GetRequiredService<UserManager<User>>();
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
 
             Task.Run(async () =>
@@ -38,10 +39,13 @@
 
                 await roleManager.CreateAsync(role);
 
-                var user = new IdentityUser
+                var user = new User
                 {
                     UserName = AdminConstants.AdministratorEmail,
                     Email = AdminConstants.AdministratorEmail,
+                    FirstName = AdminConstants.AdministratorEmail,
+                    LastName = AdminConstants.AdministratorEmail,
+                    Address = AdminConstants.AdministratorEmail
                 };
 
                 await userManager.CreateAsync(user, AdminConstants.AdministratorPassword);

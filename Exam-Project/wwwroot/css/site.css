@@ -55,6 +55,11 @@ button.accept-policy {
     height: 15vw;
     object-fit: cover;
 }
+.img{
+    width: 200px;
+    height: 150px;
+    object-position: center
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
