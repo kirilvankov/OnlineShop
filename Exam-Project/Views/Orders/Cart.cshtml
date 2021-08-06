@@ -1,0 +1,102 @@
+﻿@model OrderViewModel
+
+@{
+    ViewBag.Tytle = "My orders";
+}
+
+<div class="col-md-8 offset-2">
+    <div class="container">
+        <span>Your order created on @Model.CreatedAt</span>
+    </div>
+    @foreach (var item in Model.Items)
+    {
+        <div class="row">
+            <img class="img-thumbnail"width="150" height="200" src="~/media/@item.ImageUrl" alt="@item.Name" />
+            <div class="col">@item.Name</div>
+            <div class="col">Quantity: @item.Quantity</div>
+            <div class="col">Price: @item.ProductPrice</div>
+        </div>
+    }
+
+    <div class="row text-right offset-9" >Total Price: @Model.TotalPrice</div>
+</div>
+<span>Test</span>
+
+<div class="container">
+    <div class="nk-store nk-store-cart">
+        <div class="table-responsive">
+            <table class="table nk-store-cart-products">
+                <tbody>
+
+                    @if (Model.Items.Count() == 0)
+                    {
+                        <h3 class="text-center">Your cart is empty.</h3>
+                        @*<a class="btn btn-primary" role="button" asp-controller="Games" asp-action="All">Games</a>*@
+
+                    }
+                    else
+                    {
+                        foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="nk-product-cart-thumb">
+                                    <a href="store-product.html" class="nk-image-box-1 nk-post-image">
+                                        <img src="/media/@item.ImageUrl" height="120" width="115">
+                                    </a>
+                                </td>
+                                <td class="nk-product-cart-title">
+                                    <h5 class="h6">Product:</h5>
+                                    <div class="nk-gap-1"></div>
+
+                                    <h2 class="nk-post-title h4 float-left">
+                                        <a>@item.Name</a>
+                                    </h2>
+                                </td>
+                                <td class="nk-product-cart-price">
+                                    <h5 class="h6">Price:</h5>
+                                    <div class="nk-gap-1"></div>
+
+                                    <strong>€ @item.ProductPrice</strong>
+                                </td>
+                                <td class="nk-product-cart-quantity">
+                                    <h5 class="h6">Quantity:</h5>
+                                    <div class="nk-gap-1"></div>
+
+                                    <div style="margin-right: 10px">
+                                        <input type="number" class="form-control" value="@item.Quantity" min="1" max="21">
+
+                                        @*<div class="" style="margin-top:5px" float-left">
+                                            <a asp-controller="Cart" asp-action="Add" asp-route-gameId="@game.GameId" asp-route-userId="@User.Id()"><span title="Add game!" style="font-size: 20px">&#x2705;</span></a>
+
+                                            <a asp-controller="Cart" asp-action="Remove" asp-route-gameId="@game.GameId" asp-route-userId="@User.Id()"><span title="Remove game!" style="font-size: 20px">&#x274C;</span></a>
+                                        </div>*@
+                                    </div>
+                                </td>
+
+                            </tr>
+
+
+                        }
+
+                    }
+                    <tr>
+                        <td class="nk-product-cart-total">
+                            <h5 class="h6">Total:</h5>
+                            <div class="" style="margin-top: 15px"></div>
+                            @{
+                                //var totalSum = Model.Sum(x => x.GamePrice * x.Quantity);
+                            }
+                            @*<strong>€ @totalSum </strong>*@
+
+                            <div class="nk-gap-2 float-right" "></div>
+                            <a class="nk-btn nk-btn-rounded nk-btn-color-main-1" style="margin-top: 15px" href="store-checkout.html">Proceed to Checkout</a>
+                            <div class="clearfix"></div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
