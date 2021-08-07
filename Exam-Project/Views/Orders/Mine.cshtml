@@ -1,0 +1,76 @@
+﻿@model AllOrdersViewModel
+
+@{
+    ViewBag.Title = "My Orders";
+}
+
+<div class="container">
+    <div class="table-bordered">
+
+
+        @if (!Model.Orders.Any())
+        {
+            <h3>You do not have any orders yet.</h3>
+        }
+        else
+        {
+            foreach (var order in Model.Orders)
+            {
+                if (order.Items.Any())
+                {
+                    <table class="table-responsive">
+                        <thead>
+                            <tr class="text-center">
+                                <td class="text">
+                                    <h4>Order Details: Created on @order.CreatedAt</h4>
+
+                                </td>
+                            </tr>
+                        </thead>
+                        @foreach (var item in order.Items)
+                        {
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a>
+                                    <img src="~/media/@item.ImageUrl" class="img-thumbnail" width="120" height="150" alt="@item.Name" />
+                                </a>
+                            </td>
+                            <td>
+                                <h5>Product:</h5>
+                                <h2>
+                                    <a>@item.Name</a>
+                                </h2>
+                            </td>
+                            <td>
+                                <h5>Quantity:</h5>
+                                <h2>
+                                    <a>@item.Quantity</a>
+                                </h2>
+                            </td>
+                            <td>
+                                <h5>Price:</h5>
+                                <h2>
+                                    <a>@item.ProductPrice</a>
+                                </h2>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                         }
+                                <tr class="text-right">
+
+                                    <h5>Total: @order.TotalPrice</h5>
+
+
+                                </tr>
+                            
+                        </table>
+                    }
+
+                        }
+                        }
+
+
+                    </div>
+                </div>
