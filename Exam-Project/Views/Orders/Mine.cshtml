@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <div class="table-bordered">
+    <div class="col-12">
 
 
         @if (!Model.Orders.Any())
@@ -18,59 +18,51 @@
             {
                 if (order.Items.Any())
                 {
-                    <table class="table-responsive">
-                        <thead>
-                            <tr class="text-center">
-                                <td class="text">
-                                    <h4>Order Details: Created on @order.CreatedAt</h4>
-
-                                </td>
-                            </tr>
-                        </thead>
-                        @foreach (var item in order.Items)
+                    <table class="table-hover mt-4" width="100%">
+                        <caption style="caption-side:top"><h4>Order Details: Created on @order.CreatedAt</h4></caption>
+                       @foreach (var item in order.Items)
                         {
-                    <tbody>
+                            <tbody>
+                                <tr onclick="location.href = '@(Url.Action("Details", "Products", new {id=item.ProductId }))'" >
+                                    
+                                    <td class="col-4">
+                                        <a>
+                                            <img src="~/media/@item.ImageUrl" class="img-thumbnail" width="120" height="150" alt="@item.Name" />
+                                        </a>
+                                    </td>
+                                    <td class="col-4">
+                                        <h5>@item.Name</h5>
+                                    </td>
+                                    <td class="col-2">
+                                        <h6>Quantity: @item.Quantity</h6>
+                                    </td>
+                                    <td class="col-2">
+                                        <h5>Price: @item.ProductPrice</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        }
                         <tr>
-                            <td>
-                                <a>
-                                    <img src="~/media/@item.ImageUrl" class="img-thumbnail" width="120" height="150" alt="@item.Name" />
-                                </a>
-                            </td>
-                            <td>
-                                <h5>Product:</h5>
-                                <h2>
-                                    <a>@item.Name</a>
-                                </h2>
-                            </td>
-                            <td>
-                                <h5>Quantity:</h5>
-                                <h2>
-                                    <a>@item.Quantity</a>
-                                </h2>
-                            </td>
-                            <td>
-                                <h5>Price:</h5>
-                                <h2>
-                                    <a>@item.ProductPrice</a>
-                                </h2>
+                            <td colspan="4" class="text-right">
+                                <h5>Total: @order.TotalPrice</h5>
                             </td>
                         </tr>
-                    </tbody>
+                    </table>
+                }
 
-                         }
-                                <tr class="text-right">
-
-                                    <h5>Total: @order.TotalPrice</h5>
-
-
-                                </tr>
-                            
-                        </table>
-                    }
-
-                        }
-                        }
+            }
+        }
 
 
-                    </div>
-                </div>
+    </div>
+</div>
+@*@section Scripts{
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".click-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+}*@

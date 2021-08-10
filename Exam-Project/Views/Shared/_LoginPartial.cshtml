@@ -7,7 +7,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-white" asp-area="" asp-controller="Orders" asp-action="Cart" title="Cart"><i class="fas fa-cart-arrow-down">  Cart</i></a>
+            <a class="nav-link text-white" asp-area="" asp-controller="Cart" asp-action="Cart" title="Cart"><i class="fas fa-cart-arrow-down">  Cart</i></a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>

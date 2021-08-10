@@ -33,7 +33,7 @@
                 queryProducts = queryProducts.Where(p => p.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
                                                   p.Description.ToLower().Contains(query.SearchTerm.ToLower()));
             }
-            if (query.CategoryId != 0)
+            if (query.CategoryId != null)
             {
                 queryProducts = queryProducts.Where(p => p.CategoryId == query.CategoryId);
             }
@@ -68,6 +68,9 @@
                 Products = allProducts,
                 TotalItems = totalItems,
                 CurrentPage = query.CurrentPage,
+                SearchTerm = query.SearchTerm,
+                Sorting = query.Sorting,
+                CategoryId = query.CategoryId,
                 ItemPerPage = query.ItemPerPage,
                 Categories = GetCategories()
             });

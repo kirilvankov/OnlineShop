@@ -17,7 +17,7 @@
         public Sorting Sorting { get; set; }
 
         [Display(Name="Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public int TotalItems { get; set; }
 

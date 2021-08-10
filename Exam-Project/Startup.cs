@@ -13,6 +13,8 @@ namespace Exam_Project
     using Microsoft.Extensions.Hosting;
     using Exam_Project.Data.Infrastructure;
     using Exam_Project.Data.Models;
+    using System;
+    using Exam_Project.Services;
 
     public class Startup
     {
@@ -39,8 +41,20 @@ namespace Exam_Project
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectDbContext>();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddHttpContextAccessor();
+            services.AddTransient<IShoppingCartStorage, ShoppingCartStorage>();
+            services.AddTransient<IShopppingCartService, ShoppingCartService>();
             services.AddControllersWithViews();
-            
+
+
         }
 
 
@@ -62,6 +76,7 @@ namespace Exam_Project
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

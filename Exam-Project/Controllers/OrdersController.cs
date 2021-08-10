@@ -25,49 +25,49 @@
         [Authorize]
         public IActionResult Add(int id)
         {
-            var userId = this.User.GetId();
-            var product = this.data.Products.Where(p => p.Id == id).FirstOrDefault();
-            if (product == null)
-            {
-                return NotFound();
-            }
             
-            var orderId = this.data.Orders.Where(o => o.UserId == userId && o.CreatedAt.Date == DateTime.UtcNow.Date).Select(o => o.Id).FirstOrDefault();
-            OrderItem orderedItem;
-
-            if (orderId == 0)
-            {
-                orderedItem = new OrderItem
-                {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    ProductPrice = product.Price,
-                    Order = new Order
-                    {
-                        CreatedAt = DateTime.UtcNow,
-                        UserId = userId,
-
-                    },
-
-                };
-            }
-            else
-            {
-                orderedItem = new OrderItem
-                {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    ProductPrice = product.Price,
-                    OrderId = orderId,
-
-                };
-            }
+            //var product = this.data.Products.Where(p => p.Id == id).FirstOrDefault();
+            //if (product == null)
+            //{
+            //    return NotFound();
+            //}
             
+            //var orderId = this.data.Orders.Where(o => o.UserId == userId && o.CreatedAt.Date == DateTime.UtcNow.Date).Select(o => o.Id).FirstOrDefault();
+            //OrderItem orderedItem;
 
+            //if (orderId == 0)
+            //{
+            //    orderedItem = new OrderItem
+            //    {
+            //        ProductId = product.Id,
+            //        ProductName = product.Name,
+            //        ProductPrice = product.Price,
+            //        Order = new Order
+            //        {
+            //            CreatedAt = DateTime.UtcNow,
+            //            UserId = userId,
+
+            //        },
+
+            //    };
+            //}
+            //else
+            //{
+            //    orderedItem = new OrderItem
+            //    {
+            //        ProductId = product.Id,
+            //        ProductName = product.Name,
+            //        ProductPrice = product.Price,
+            //        OrderId = orderId,
+
+            //    };
+            //}
             
 
-            this.data.OrderItems.Add(orderedItem);
-            this.data.SaveChanges();
+            
+
+            //this.data.OrderItems.Add(orderedItem);
+            //this.data.SaveChanges();
 
            
             return RedirectToAction(nameof(Cart));
@@ -81,7 +81,7 @@
             var orderId = this.data.Orders.Where(o => o.UserId == userId && o.CreatedAt.Date == DateTime.UtcNow.Date).Select(o => o.Id).FirstOrDefault();
             if (orderId == 0)
             {
-                return BadRequest();
+                return Ok("Your cart is empty.");
             }
             var order = this.data.Orders.Find(orderId);
 
@@ -121,6 +121,7 @@
                     Id = oi.Id,
                     ImageUrl = oi.Product.ImageUrl,
                     Name = oi.ProductName,
+                    ProductId = oi.ProductId,
                     ProductPrice = oi.ProductPrice,
                     Quantity = oi.Quantity
                 }).ToList();
