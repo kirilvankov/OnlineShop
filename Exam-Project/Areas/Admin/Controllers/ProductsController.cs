@@ -177,6 +177,8 @@
             return RedirectToAction(nameof(All));
 
         }
+
+        //TODO: Create delete product action!
         private IEnumerable<ProductCategoriesViewModel> GetCategories()
             => this.data.Categories.Select(c => new ProductCategoriesViewModel
             {
