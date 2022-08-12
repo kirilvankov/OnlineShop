@@ -15,6 +15,9 @@ namespace Exam_Project
     using Exam_Project.Data.Models;
     using System;
     using Exam_Project.Services;
+    using Microsoft.AspNetCore.Authentication.Certificate;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -42,6 +45,33 @@ namespace Exam_Project
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ProjectDbContext>();
             services.AddDistributedMemoryCache();
+
+            //services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate(options =>
+            //{
+            //    options.Events = new CertificateAuthenticationEvents
+            //    {
+            //        OnCertificateValidated = context =>
+            //        {
+            //            var claims = new[]
+            //            {
+            //        new Claim(
+            //            ClaimTypes.NameIdentifier,
+            //            context.ClientCertificate.Subject,
+            //            ClaimValueTypes.String, context.Options.ClaimsIssuer),
+            //        new Claim(
+            //            ClaimTypes.Name,
+            //            context.ClientCertificate.Subject,
+            //            ClaimValueTypes.String, context.Options.ClaimsIssuer)
+            //    };
+
+            //            context.Principal = new ClaimsPrincipal(
+            //                new ClaimsIdentity(claims, context.Scheme.Name));
+            //            context.Success();
+
+            //            return Task.CompletedTask;
+            //        }
+            //    };
+            //});
 
             services.AddSession(options =>
             {

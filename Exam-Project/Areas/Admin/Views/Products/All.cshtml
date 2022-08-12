@@ -1,11 +1,9 @@
 ﻿@model AdminProductViewModel
 @{
     ViewBag.Title = "All Products - Admin";
-}
-@{
+
     var userIsAdmin = User.IsInRole(AdminConstants.AdministratorRoleName);
-}
-@{
+
     var previousPage = Model.CurrentPage - 1;
     if (previousPage < 1)
     {
@@ -27,7 +25,7 @@
     </div>
 </div>
 @*<div class="row">
-        @foreach (var product in Model)
+        @foreach (var product in Model.Products)
         {
             <div class="col-md-3">
                 <div class="card mb-4" style="width: 18rem;">
@@ -72,7 +70,10 @@
         {
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-3 adminImg">
+                        <img src="~/media/@product.ImageUrl" alt="icon" title="@product.Name"/>
+                    </div>
+                    <div class="col-6">
                         @product.Name
                     </div>
                     <div class="col-3 text-right">
