@@ -11,35 +11,35 @@
 
     public class CartController : Controller
     {
-        private readonly IShopppingCartService cart;
+        private readonly IShopppingCartService _cart;
 
         public CartController(IShopppingCartService cart)
         {
-            this.cart = cart;
+            _cart = cart;
         }
 
         public IActionResult Cart()
         {
-            CartServiceModel model = cart.GetCurrentCart();
+            CartServiceModel model = _cart.GetCurrentCart();
             return View(model);
         }
         public IActionResult Add(int id)
         {
-            var result = cart.AddItem(id);
+            var result = _cart.AddItem(id);
 
             return RedirectToAction(nameof(Cart));
         }
 
         public IActionResult Remove(int id)
         {
-            var result = cart.RemoveItem(id);
+            var result = _cart.RemoveItem(id);
 
             return RedirectToAction(nameof(Cart));
         }
 
         public IActionResult Decrease(int id)
         {
-            var result = cart.Decrease(id);
+            var result = _cart.Decrease(id);
 
             return RedirectToAction(nameof(Cart));
         }

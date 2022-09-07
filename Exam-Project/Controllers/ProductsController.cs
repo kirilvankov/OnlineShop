@@ -50,8 +50,8 @@
             var totalItems = queryProducts.Count();
 
             var allProducts = queryProducts
-                    .Skip((query.CurrentPage - 1) * query.ItemPerPage)
-                    .Take(query.ItemPerPage)
+                    .Skip((query.PageIndex - 1) * query.PageSize)
+                    .Take(query.PageSize)
                     .Select(p => new ProductViewModel
                     {
                         Id = p.Id,
@@ -67,11 +67,11 @@
             {
                 Products = allProducts,
                 TotalItems = totalItems,
-                CurrentPage = query.CurrentPage,
+                PageIndex = query.PageIndex,
                 SearchTerm = query.SearchTerm,
                 Sorting = query.Sorting,
                 CategoryId = query.CategoryId,
-                ItemPerPage = query.ItemPerPage,
+                PageSize = query.PageSize,
                 Categories = GetCategories()
             });
 

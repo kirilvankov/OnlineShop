@@ -1,10 +1,7 @@
 ﻿namespace Exam_Project.Services
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text.Json;
-    using System.Threading.Tasks;
 
     using Exam_Project.Models.Cart;
 
@@ -14,11 +11,12 @@
     {
         const string SessionKey = "_ShoppingCartItems";
 
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession Session => _httpContextAccessor.HttpContext.Session;
 
         public ShoppingCartStorage(IHttpContextAccessor httpContextAccessor)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public List<ShoppingCartStoredItem> Retrieve()
@@ -33,6 +31,5 @@
             Session.SetString(SessionKey, cartString);
         }
 
-        private ISession Session => this.httpContextAccessor.HttpContext.Session;
     }
 }
