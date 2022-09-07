@@ -15,22 +15,22 @@
 
     public class ProductsController : BaseAdminController
     {
-        private readonly ProjectDbContext data;
-        private readonly IWebHostEnvironment env;
+        private readonly ProjectDbContext _dbContext;
+        private readonly IWebHostEnvironment _env;
 
-        public ProductsController(ProjectDbContext data, IWebHostEnvironment env)
+        public ProductsController(ProjectDbContext dbContext, IWebHostEnvironment env)
         {
-            this.data = data;
-            this.env = env;
+            _dbContext = dbContext;
+            _env = env;
         }
 
         public IActionResult All([FromQuery] AdminProductViewModel query)
         {
-            var productsQuery = this.data.Products.AsQueryable();
-            var totalItems = this.data.Products.Count();
+            var productsQuery = _dbContext.Products.AsQueryable();
+            var totalItems = _dbContext.Products.Count();
             var allProducts = productsQuery
-                .Skip((query.CurrentPage - 1) * query.ItemPerPage)
-                .Take(query.ItemPerPage)
+                .Skip((query.PageIndex - 1) * query.PageSize)
+                .Take(query.PageSize)
                 .Select(p => new ProductViewModel
                 {
 
@@ -48,8 +48,8 @@
             {
                 TotalItems = totalItems,
                 Products = allProducts,
-                CurrentPage = query.CurrentPage,
-                ItemPerPage = query.ItemPerPage,
+                PageIndex = query.PageIndex,
+                PageSize = query.PageSize,
                 Categories = GetCategories()
             });
         }
@@ -98,15 +98,15 @@
                 CategoryId = product.CategoryId
             };
 
-            this.data.Add(productData);
-            this.data.SaveChanges();
+            _dbContext.Add(productData);
+            _dbContext.SaveChanges();
 
             return RedirectToAction(nameof(All));
 
         }
         public IActionResult Edit(int id)
         {
-            var product = this.data.Products.Find(id);
+            var product = _dbContext.Products.Find(id);
 
             if (product == null)
             {
@@ -137,7 +137,7 @@
                 });
             }
 
-            var editedProduct = this.data.Products.Where(p => p.Id == id).FirstOrDefault();
+            var editedProduct = _dbContext.Products.Where(p => p.Id == id).FirstOrDefault();
 
             if (editedProduct == null)
             {
@@ -146,7 +146,7 @@
 
             if (product.Image != null)
             {
-                var uploadedFolder = FileSystem.Path.Combine(this.env.WebRootPath, "media");
+                var uploadedFolder = FileSystem.Path.Combine(_env.WebRootPath, "media");
                 var filePath = FileSystem.Path.Combine(uploadedFolder, product.ImageName);
 
                 if (FileSystem.File.Exists(filePath))
@@ -162,7 +162,7 @@
                         throw new ArgumentException(e.Message);
                     }
                 }
-               
+
             }
             var fileName = UploadFile(product);
 
@@ -172,7 +172,7 @@
             editedProduct.ImageUrl = fileName;
             editedProduct.CategoryId = product.CategoryId;
 
-            this.data.SaveChanges();
+            _dbContext.SaveChanges();
 
             return RedirectToAction(nameof(All));
 
@@ -180,7 +180,7 @@
 
         //TODO: Create delete product action!
         private IEnumerable<ProductCategoriesViewModel> GetCategories()
-            => this.data.Categories.Select(c => new ProductCategoriesViewModel
+            => _dbContext.Categories.Select(c => new ProductCategoriesViewModel
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -188,7 +188,7 @@
             }).ToList();
 
         private bool CategoryExist(int categoryId)
-                => this.data.Categories.Any(c => c.Id == categoryId);
+                => _dbContext.Categories.Any(c => c.Id == categoryId);
 
         private string UploadFile(ProductFormModel product)
         {
@@ -196,7 +196,7 @@
 
             if (product.Image != null)
             {
-                var uploadedFolder = FileSystem.Path.Combine(this.env.WebRootPath, "media");
+                var uploadedFolder = FileSystem.Path.Combine(_env.WebRootPath, "media");
                 imageFile = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
 
                 var filePath = FileSystem.Path.Combine(uploadedFolder, imageFile);

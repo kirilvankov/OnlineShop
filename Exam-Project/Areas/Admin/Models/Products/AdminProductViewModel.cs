@@ -6,9 +6,9 @@ namespace Exam_Project.Areas.Admin.Models.Products
 {
     public class AdminProductViewModel : ProductViewModel
     {
-        public int CurrentPage { get; init; } = 1;
+        public int PageIndex { get; init; } = 1;
 
-        public int ItemPerPage { get; init; } = 12;
+        public int PageSize { get; init; } = 3;
 
         public int TotalItems { get; set; }
 
