@@ -18,7 +18,7 @@
             _cart = cart;
         }
 
-        public IActionResult Cart()
+        public IActionResult Cart()//todo: rename this action and view
         {
             CartServiceModel model = _cart.GetCurrentCart();
             return View(model);
