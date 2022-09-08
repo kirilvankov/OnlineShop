@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Data
+﻿namespace OnlineShop.Data
 {
     using System;
     using System.Collections.Generic;

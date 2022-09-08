@@ -1,8 +1,8 @@
-﻿namespace Exam_Project.Controllers
+﻿namespace OnlineShop.Controllers
 {
     using System.Diagnostics;
 
-    using Exam_Project.Models;
+    using OnlineShop.Models;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;

@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Data.Models
+﻿namespace OnlineShop.Data.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

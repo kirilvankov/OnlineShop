@@ -1,4 +1,4 @@
-namespace Exam_Project.Models
+namespace OnlineShop.Models
 {
     using System;
 

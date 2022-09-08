@@ -1,11 +1,11 @@
-﻿namespace Exam_Project.Controllers
+﻿namespace OnlineShop.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Exam_Project.Services;
-    using Exam_Project.Services.Models;
+    using OnlineShop.Services;
+    using OnlineShop.Services.Models;
 
     using Microsoft.AspNetCore.Mvc;
 

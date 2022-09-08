@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Exceptions
+﻿namespace OnlineShop.Exceptions
 {
     using System;
     using System.Collections.Generic;

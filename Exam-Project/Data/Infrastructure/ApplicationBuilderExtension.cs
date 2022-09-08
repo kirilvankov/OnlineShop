@@ -1,10 +1,10 @@
-﻿namespace Exam_Project.Data.Infrastructure
+﻿namespace OnlineShop.Data.Infrastructure
 {
     using System;
     using System.Threading.Tasks;
 
-    using Exam_Project.Areas.Admin;
-    using Exam_Project.Data.Models;
+    using OnlineShop.Areas.Admin;
+    using OnlineShop.Data.Models;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;

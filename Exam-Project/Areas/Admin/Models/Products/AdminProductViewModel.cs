@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using Exam_Project.Models.Products;
+using OnlineShop.Models.Products;
 
-namespace Exam_Project.Areas.Admin.Models.Products
+namespace OnlineShop.Areas.Admin.Models.Products
 {
     public class AdminProductViewModel : ProductViewModel
     {

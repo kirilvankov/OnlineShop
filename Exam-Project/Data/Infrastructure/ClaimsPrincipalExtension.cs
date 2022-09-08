@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Data.Infrastructure
+﻿namespace OnlineShop.Data.Infrastructure
 {
 
     using System.Security.Claims;

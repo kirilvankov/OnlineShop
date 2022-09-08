@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Exam_Project.Data.Models;
+using OnlineShop.Data.Models;
 
-namespace Exam_Project.Areas.Identity.Pages.Account
+namespace OnlineShop.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel

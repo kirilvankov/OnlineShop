@@ -1,9 +1,9 @@
-﻿namespace Exam_Project.Services
+﻿namespace OnlineShop.Services
 {
     using System.Collections.Generic;
     using System.Text.Json;
 
-    using Exam_Project.Models.Cart;
+    using OnlineShop.Models.Cart;
 
     using Microsoft.AspNetCore.Http;
 

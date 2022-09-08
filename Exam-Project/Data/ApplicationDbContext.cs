@@ -1,7 +1,7 @@
-﻿namespace Exam_Project.Data
+﻿namespace OnlineShop.Data
 {
     
-    using Exam_Project.Data.Models;
+    using OnlineShop.Data.Models;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;

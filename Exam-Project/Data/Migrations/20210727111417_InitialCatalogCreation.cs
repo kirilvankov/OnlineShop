@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Exam_Project.Data.Migrations
+namespace OnlineShop.Data.Migrations
 {
     public partial class InitialCatalogCreation : Migration
     {
