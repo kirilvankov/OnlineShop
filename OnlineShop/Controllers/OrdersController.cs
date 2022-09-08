@@ -2,24 +2,27 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
-
-    using OnlineShop.Data;
-    using OnlineShop.Data.Infrastructure;
-    using OnlineShop.Data.Models;
-    using OnlineShop.Models.Orders;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using OnlineShop.Data;
+    using OnlineShop.Data.Infrastructure;
+    using OnlineShop.Models.Orders;
+    using OnlineShop.Services;
+
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext data;
-        public OrdersController(ApplicationDbContext data)
+        private readonly IOrderService _orderService;
+
+        public OrdersController(ApplicationDbContext data, IOrderService orderService)
         {
             this.data = data;
+            _orderService = orderService;
         }
 
         [Authorize]
@@ -107,42 +110,29 @@
         }
 
         [Authorize]
-        public IActionResult Mine()
+        public async Task<IActionResult> MyOrders(CancellationToken cancellationToken)
         {
             var userId = this.User.GetId();
-            var orders = this.data.Orders.Where(o => o.UserId == userId).Select(o => o.Id).ToList();
 
-            
-            var allOrders = new List<OrderViewModel>();
-            foreach (var orderId in orders)
+            var res = await _orderService.GetUserOrders(userId, cancellationToken);
+
+            var result = new AllOrdersViewModel();
+            result.Orders = res.Select(o => new OrderViewModel
             {
-                var items = this.data.OrderItems.Where(oi => oi.OrderId == orderId).Select(oi => new OrderItemsViewModel
+                CreatedAt = o.CreatedAt,
+                Items = o.Items.Select(oi => new OrderItemsViewModel
                 {
                     Id = oi.Id,
-                    ImageUrl = oi.Product.ImageUrl,
-                    Name = oi.ProductName,
+                    Name = oi.Name,
                     ProductId = oi.ProductId,
                     ProductPrice = oi.ProductPrice,
+                    ImageUrl = oi.ImageUrl,
                     Quantity = oi.Quantity
-                }).ToList();
-
-                var totalPrice = items.Sum(i => i.ProductPrice);
-                var date = this.data.Orders.Where(o => o.Id == orderId).Select(o => o.CreatedAt).FirstOrDefault();
-                var order = new OrderViewModel
-                {
-                    CreatedAt = date,
-                    Items = items,
-                    TotalPrice = totalPrice
-                };
-                allOrders.Add(order);
-            }
-
-
+                }).ToList(),
+                TotalPrice = o.Items.Sum(oi => oi.ProductPrice)
+            }).ToList();
             
-            return View( new AllOrdersViewModel 
-            { 
-                Orders = allOrders
-            });
+            return View(result);
         }
     }
 }
