@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-using Exam_Project.Data.Models;
+using OnlineShop.Data.Models;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-using static Exam_Project.Data.DataConstants.User;
+using static OnlineShop.Data.DataConstants.User;
 
-namespace Exam_Project.Areas.Identity.Pages.Account
+namespace OnlineShop.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel

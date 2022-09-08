@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Areas.Admin.Controllers
+﻿namespace OnlineShop.Areas.Admin.Controllers
 {
     using System;
     using System.Collections.Generic;

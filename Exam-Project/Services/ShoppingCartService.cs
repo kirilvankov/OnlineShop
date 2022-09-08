@@ -1,14 +1,14 @@
-﻿namespace Exam_Project.Services
+﻿namespace OnlineShop.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Exam_Project.Data;
-    using Exam_Project.Exceptions;
-    using Exam_Project.Models.Cart;
-    using Exam_Project.Services.Models;
+    using OnlineShop.Data;
+    using OnlineShop.Exceptions;
+    using OnlineShop.Models.Cart;
+    using OnlineShop.Services.Models;
 
     public class ShoppingCartService : IShopppingCartService
     {

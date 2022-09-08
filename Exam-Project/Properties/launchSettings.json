@@ -16,7 +16,7 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       }
     },
-    "Exam_Project": {
+    "OnlineShop": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Controllers
+﻿namespace OnlineShop.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Exam_Project.Data;
-    using Exam_Project.Data.Infrastructure;
-    using Exam_Project.Data.Models;
-    using Exam_Project.Models.Orders;
+    using OnlineShop.Data;
+    using OnlineShop.Data.Infrastructure;
+    using OnlineShop.Data.Models;
+    using OnlineShop.Models.Orders;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

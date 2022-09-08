@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Models.Products
+﻿namespace OnlineShop.Models.Products
 {
     using System;
     using System.Collections.Generic;

@@ -1,12 +1,12 @@
-﻿namespace Exam_Project.Services
+﻿namespace OnlineShop.Services
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Exam_Project.Data;
-    using Exam_Project.Services.Models;
+    using OnlineShop.Data;
+    using OnlineShop.Services.Models;
 
     using Microsoft.EntityFrameworkCore;
 

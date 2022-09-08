@@ -1,11 +1,11 @@
-﻿namespace Exam_Project.Services.Models
+﻿namespace OnlineShop.Services.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Exam_Project.Models.Cart;
+    using OnlineShop.Models.Cart;
 
     public class CartServiceModel
     {

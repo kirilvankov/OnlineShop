@@ -1,9 +1,9 @@
-﻿namespace Exam_Project.Models.Products
+﻿namespace OnlineShop.Models.Products
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Exam_Project.Areas.Admin.Models.Products;
+    using OnlineShop.Areas.Admin.Models.Products;
 
     public class ProductListViewModel
     {

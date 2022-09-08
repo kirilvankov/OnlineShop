@@ -1,13 +1,13 @@
-﻿namespace Exam_Project.Controllers
+﻿namespace OnlineShop.Controllers
 {
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Exam_Project.Areas.Admin.Models.Products;
-    using Exam_Project.Models.Products;
-    using Exam_Project.Services;
-    using Exam_Project.Services.Models;
+    using OnlineShop.Areas.Admin.Models.Products;
+    using OnlineShop.Models.Products;
+    using OnlineShop.Services;
+    using OnlineShop.Services.Models;
 
     using Microsoft.AspNetCore.Mvc;
 

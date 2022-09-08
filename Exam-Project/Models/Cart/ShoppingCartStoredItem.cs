@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Models.Cart
+﻿namespace OnlineShop.Models.Cart
 {
 
     public class ShoppingCartStoredItem

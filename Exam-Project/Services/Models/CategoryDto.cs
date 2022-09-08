@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Services.Models
+﻿namespace OnlineShop.Services.Models
 {
     public class CategoryDto
     {

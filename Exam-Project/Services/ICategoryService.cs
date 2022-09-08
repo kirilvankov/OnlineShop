@@ -1,10 +1,10 @@
-﻿namespace Exam_Project.Services
+﻿namespace OnlineShop.Services
 {
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Exam_Project.Services.Models;
+    using OnlineShop.Services.Models;
 
     public interface ICategoryService
     {

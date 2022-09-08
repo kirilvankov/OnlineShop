@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Models.Orders
+﻿namespace OnlineShop.Models.Orders
 {
     public class OrderItemsViewModel
     {

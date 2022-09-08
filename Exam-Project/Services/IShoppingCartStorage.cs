@@ -1,11 +1,11 @@
-﻿namespace Exam_Project.Services
+﻿namespace OnlineShop.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Exam_Project.Models.Cart;
+    using OnlineShop.Models.Cart;
 
     public interface IShoppingCartStorage
     {

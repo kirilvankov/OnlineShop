@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Areas.Admin.Models.Products
+﻿namespace OnlineShop.Areas.Admin.Models.Products
 {
 
     using System.Collections.Generic;

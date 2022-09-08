@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Areas.Admin
+﻿namespace OnlineShop.Areas.Admin
 {
 
     public class AdminConstants

@@ -1,13 +1,13 @@
-﻿namespace Exam_Project.Areas.Admin.Controllers
+﻿namespace OnlineShop.Areas.Admin.Controllers
 {
     using System;
     using System.Collections.Generic;
     using FileSystem = System.IO;
     using System.Linq;
-    using Exam_Project.Areas.Admin.Models.Products;
-    using Exam_Project.Data;
-    using Exam_Project.Data.Models;
-    using Exam_Project.Models.Products;
+    using OnlineShop.Areas.Admin.Models.Products;
+    using OnlineShop.Data;
+    using OnlineShop.Data.Models;
+    using OnlineShop.Models.Products;
 
     using Microsoft.AspNetCore.Hosting;
 

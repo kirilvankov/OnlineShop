@@ -1,8 +1,8 @@
-﻿namespace Exam_Project.Services.Models
+﻿namespace OnlineShop.Services.Models
 {
     using System.Collections.Generic;
 
-    using Exam_Project.Models.Products;
+    using OnlineShop.Models.Products;
 
     public class AllProductsDto
     {

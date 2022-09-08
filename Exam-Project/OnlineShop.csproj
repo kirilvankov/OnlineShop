@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <UserSecretsId>aspnet-Exam_Project-30ABA810-9D3C-4CD5-BAB0-498BEF330002</UserSecretsId>
-    <RootNamespace>Exam_Project</RootNamespace>
+    <UserSecretsId>aspnet-OnlineShop-30ABA810-9D3C-4CD5-BAB0-498BEF330002</UserSecretsId>
+    <RootNamespace>OnlineShop</RootNamespace>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 

@@ -1,4 +1,4 @@
-namespace Exam_Project
+namespace OnlineShop
 {
     using System;
     using System.Collections.Generic;

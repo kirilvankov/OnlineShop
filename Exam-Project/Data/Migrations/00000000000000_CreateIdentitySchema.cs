@@ -1,4 +1,4 @@
-﻿namespace Exam_Project.Data.Migrations
+﻿namespace OnlineShop.Data.Migrations
 {
     using System;
 

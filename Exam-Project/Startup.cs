@@ -1,6 +1,6 @@
-namespace Exam_Project
+namespace OnlineShop
 {
-    using Exam_Project.Data;
+    using OnlineShop.Data;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -11,10 +11,10 @@ namespace Exam_Project
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Exam_Project.Data.Infrastructure;
-    using Exam_Project.Data.Models;
+    using OnlineShop.Data.Infrastructure;
+    using OnlineShop.Data.Models;
     using System;
-    using Exam_Project.Services;
+    using OnlineShop.Services;
     using Microsoft.AspNetCore.Authentication.Certificate;
     using System.Security.Claims;
     using System.Threading.Tasks;
