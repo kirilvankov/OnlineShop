@@ -12,19 +12,19 @@
 
     public class ShoppingCartService : IShopppingCartService
     {
-        private readonly ProjectDbContext data;
-        private readonly IShoppingCartStorage storage;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IShoppingCartStorage _storage;
         
 
-        public ShoppingCartService(ProjectDbContext data, IShoppingCartStorage storage)
+        public ShoppingCartService(ApplicationDbContext dbContext, IShoppingCartStorage storage)
         {
-            this.data = data;
-            this.storage = storage;
+            _dbContext = dbContext;
+            _storage = storage;
         }
 
         public CartServiceModel AddItem(int id)
         {
-            var itemsInCart = storage.Retrieve();
+            var itemsInCart = _storage.Retrieve();
             var existingItemInCart = itemsInCart.SingleOrDefault(s => s.ProductId == id);
             if (existingItemInCart != null)
             {
@@ -32,7 +32,7 @@
             }
             else
             {
-                var item = this.data.Products.Find(id);
+                var item = _dbContext.Products.Find(id);
                 if (item == null)
                 {
                     throw new ItemNotFoundException("Item not found");
@@ -51,7 +51,7 @@
 
             }
 
-            storage.Store(itemsInCart);
+            _storage.Store(itemsInCart);
 
             return new CartServiceModel
             { 
@@ -61,7 +61,7 @@
 
         public CartServiceModel RemoveItem(int id)
         {
-            var itemsInCart = storage.Retrieve();
+            var itemsInCart = _storage.Retrieve();
 
             var existingItemInCart = itemsInCart.SingleOrDefault(s => s.ProductId == id);
 
@@ -70,7 +70,7 @@
                 itemsInCart.Remove(existingItemInCart);
             }
 
-            storage.Store(itemsInCart);
+            _storage.Store(itemsInCart);
 
             return new CartServiceModel
             {
@@ -80,7 +80,7 @@
 
         public CartServiceModel Decrease(int id)
         {
-            var itemsInCart = storage.Retrieve();
+            var itemsInCart = _storage.Retrieve();
             var existingItemInCart = itemsInCart.SingleOrDefault(s => s.ProductId == id);
 
             if (existingItemInCart.Quantity > 1)
@@ -88,7 +88,7 @@
                 existingItemInCart.Quantity--;
             }
 
-            storage.Store(itemsInCart);
+            _storage.Store(itemsInCart);
 
             return new CartServiceModel
             {
@@ -98,7 +98,7 @@
 
         public CartServiceModel GetCurrentCart()
         {
-            var itemsInCart = storage.Retrieve();
+            var itemsInCart = _storage.Retrieve();
 
             return new CartServiceModel
             {

@@ -11,7 +11,7 @@ namespace Exam_Project.Data.Migrations
     using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

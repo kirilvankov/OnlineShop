@@ -16,8 +16,8 @@
 
     public class OrdersController : Controller
     {
-        private readonly ProjectDbContext data;
-        public OrdersController(ProjectDbContext data)
+        private readonly ApplicationDbContext data;
+        public OrdersController(ApplicationDbContext data)
         {
             this.data = data;
         }

@@ -6,9 +6,9 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ProjectDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ProjectDbContext(DbContextOptions<ProjectDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }

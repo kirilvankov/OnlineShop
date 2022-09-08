@@ -5,7 +5,7 @@
 
     using Exam_Project.Areas.Admin.Models.Products;
 
-    public class ProductQueryViewModel
+    public class ProductListViewModel
     {
         public int Id { get; set; }
 

@@ -30,7 +30,7 @@ namespace Exam_Project
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProjectDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -43,7 +43,7 @@ namespace Exam_Project
                 options.Password.RequireLowercase = false;
             })
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ProjectDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDistributedMemoryCache();
 
             //services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate(options =>
@@ -82,6 +82,8 @@ namespace Exam_Project
             services.AddHttpContextAccessor();
             services.AddTransient<IShoppingCartStorage, ShoppingCartStorage>();
             services.AddTransient<IShopppingCartService, ShoppingCartService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddControllersWithViews();
 
 

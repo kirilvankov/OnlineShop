@@ -1,4 +1,4 @@
-﻿@model ProductQueryViewModel
+﻿@model ProductListViewModel
 @{
     ViewBag.Title = "All Products";
 
@@ -58,7 +58,7 @@
     <div class="col-md-6">
         <a class="btn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : string.Empty)"
            asp-controller="Products" asp-action="All"
-           asp-route-currentPage="@previousPage"
+           asp-route-pageIndex="@previousPage"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)"
            asp-route-categoryId="@Model.CategoryId"><i class="fas fa-angle-left"></i> Previous</a>
@@ -66,7 +66,7 @@
     <div class="col-md-6">
         <a class="btn btn-outline-primary float-right @(Model.PageIndex == maxPage ? "disabled" : string.Empty)"
            asp-controller="Products" asp-action="All"
-           asp-route-currentPage="@(Model.PageIndex + 1)"
+           asp-route-pageIndex="@(Model.PageIndex + 1)"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)"
            asp-route-categoryId="@Model.CategoryId">Next Page <i class="fas fa-angle-right"></i></a>

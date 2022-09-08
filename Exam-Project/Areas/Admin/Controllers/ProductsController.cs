@@ -15,10 +15,10 @@
 
     public class ProductsController : BaseAdminController
     {
-        private readonly ProjectDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
         private readonly IWebHostEnvironment _env;
 
-        public ProductsController(ProjectDbContext dbContext, IWebHostEnvironment env)
+        public ProductsController(ApplicationDbContext dbContext, IWebHostEnvironment env)
         {
             _dbContext = dbContext;
             _env = env;

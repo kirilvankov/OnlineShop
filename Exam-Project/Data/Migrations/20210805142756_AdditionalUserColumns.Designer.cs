@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Exam_Project.Data.Migrations
 {
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210805142756_AdditionalUserColumns")]
     partial class AdditionalUserColumns
     {
