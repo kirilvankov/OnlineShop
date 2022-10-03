@@ -1,0 +1,48 @@
+﻿@model PagedResult<ProductViewModel>
+@{
+
+    int selectedPage = Model.PageIndex;
+    var startIndex = Math.Max(Model.PageCount - 5, 1);
+    var finishIndex = Math.Min(Model.PageCount + 5, Model.PageCount);
+}
+
+<div class="container" style="margin-top: 10px">
+    <nav aria-label="Page navigation">
+        @if (Model.PageCount > 1)
+        {
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : string.Empty)">
+                    <a class="page-link disabled" asp-controller="Products" asp-action="All"
+                   asp-route-pageIndex="@(Model.PageIndex - 1)"
+                   asp-route-searchTerm="@Model.SearchTerm"
+                   asp-route-sorting="@((int)Model.Sorting)"
+                   asp-route-categoryId="@Model.CategoryId">&laquo;</a>
+                </li>
+                @for (var i = startIndex; i <= finishIndex; i++)
+                {
+                    @if (i == selectedPage)
+                    {
+                        <li class="page-item active"><span class="page-link">@i</span></li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Products" asp-action="All"
+                   asp-route-pageIndex="@(Model.PageIndex = i)"
+                   asp-route-searchTerm="@Model.SearchTerm"
+                   asp-route-sorting="@((int)Model.Sorting)"
+                   asp-route-categoryId="@Model.CategoryId">@i</a>
+                        </li>
+                    }
+                }
+                <li class="page-item @(selectedPage >= Model.PageCount ? "disabled" : string.Empty)">
+                    <a class="page-link" asp-controller="Products" asp-action="All"
+                   asp-route-pageIndex="@(selectedPage + 1)"
+                   asp-route-searchTerm="@Model.SearchTerm"
+                   asp-route-sorting="@((int)Model.Sorting)"
+                   asp-route-categoryId="@Model.CategoryId">&raquo;</a>
+                </li>
+            </ul>
+        }
+    </nav>
+</div>

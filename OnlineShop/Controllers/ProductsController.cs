@@ -34,12 +34,15 @@
 
             var result = await _productService.GetAllProducts(query, cancellationToken);
 
-            
-
-            return View(new ProductListViewModel
+            var test = new PagedResult<ProductViewModel>
             {
-                Products = result.Products.Select(p=> new ProductViewModel 
-                { 
+                PageIndex = result.PageIndex,
+                PageSize = result.PageSize,
+                SearchTerm = result.SearchTerm,
+                TotalCount = result.TotalItems,
+                Sorting = result.Sorting,
+                Products = result.Products.Select(p => new ProductViewModel
+                {
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
@@ -47,20 +50,43 @@
                     ImageUrl = p.ImageUrl,
                     CategoryId = p.CategoryId,
                     OrderingNumber = p.OrderingNumber,
-                }),
-                TotalItems = result.TotalItems,
-                PageIndex = result.PageIndex,
-                SearchTerm = result.SearchTerm,
-                Sorting = result.Sorting,
-                CategoryId = result.CategoryId,
-                PageSize = result.PageSize,
+                }).ToList(),
                 Categories = result.Categories.Select(c => new ProductCategoriesViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     ParentId = c.ParentId
                 }).ToList()
-            });
+
+            };
+
+            
+            return View(test);
+            //return View(new ProductListViewModel
+            //{
+            //    Products = result.Products.Select(p=> new ProductViewModel 
+            //    { 
+            //        Id = p.Id,
+            //        Name = p.Name,
+            //        Description = p.Description,
+            //        Price = p.Price,
+            //        ImageUrl = p.ImageUrl,
+            //        CategoryId = p.CategoryId,
+            //        OrderingNumber = p.OrderingNumber,
+            //    }),
+            //    TotalItems = result.TotalItems,
+            //    PageIndex = result.PageIndex,
+            //    SearchTerm = result.SearchTerm,
+            //    Sorting = result.Sorting,
+            //    CategoryId = result.CategoryId,
+            //    PageSize = result.PageSize,
+            //    Categories = result.Categories.Select(c => new ProductCategoriesViewModel
+            //    {
+            //        Id = c.Id,
+            //        Name = c.Name,
+            //        ParentId = c.ParentId
+            //    }).ToList()
+            //});
 
         }
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
@@ -68,7 +94,7 @@
             var product = await _productService.GetProductById(id, cancellationToken);
             if (product == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             return View(new DetailsProductViewModel

@@ -1,6 +1,6 @@
 ﻿@model DetailsProductViewModel
 
-    <div class="btn" >
+    @*<div class="btn" >
         <div class="row">
                 <div class="card col-6 offset-2 text-center">
                     <img src="/media/@Model.ImageUrl" width="600" height="300" class="img-fluid">
@@ -25,6 +25,23 @@
                 <a class="btn btn-outline-primary btn-lg" type="submit" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id"><i class="fas fa-cart-arrow-down"></i> Add to cart</a>
             </div>
         </div>
+    </div>*@
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="~/media/@Model.ImageUrl" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">@Model.Description</p>
+            </div>
+            <div class="action-button">
+                <a class="btn btn-outline-primary btn-lg" type="submit" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id"><i class="fas fa-cart-arrow-down"></i> Add to cart</a>
+            </div>
+        </div>
     </div>
+</div>
 
     

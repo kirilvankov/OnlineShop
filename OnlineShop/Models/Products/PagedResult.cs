@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Xml.Linq;
+    using OnlineShop.Areas.Admin.Models.Products;
 
     public class PagedResult<T> where T : class
     {
@@ -9,11 +12,21 @@
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
         public int PageCount => (int)Math.Ceiling((double)TotalCount / PageSize);
-        public List<T> Items { get; set; }
+
+        [Display(Name = "Search")]
+        public string SearchTerm { get; set; }
+
+        public Sorting Sorting { get; set; }
+
+        [Display(Name = "Category")]
+        public int? CategoryId { get; set; }
+        public List<T> Products { get; set; }
+        public List<ProductCategoriesViewModel> Categories { get; set; }
 
         public PagedResult()
         {
-            Items = new List<T>();
+            Products = new List<T>();
+            Categories = new List<ProductCategoriesViewModel>();
         }
     }
 }

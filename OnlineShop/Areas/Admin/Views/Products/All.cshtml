@@ -1,55 +1,12 @@
-﻿@model AdminProductViewModel
+﻿@using OnlineShop.ViewComponents
+@model PagedResult<ProductViewModel>
+
+
 @{
     ViewBag.Title = "All Products - Admin";
 
     var userIsAdmin = User.IsInRole(AdminConstants.AdministratorRoleName);
-
-    var previousPage = Model.PageIndex - 1;
-    if (previousPage < 1)
-    {
-        previousPage = 1;
-    }
-
-    var maxPage = Math.Ceiling((double)Model.TotalItems / Model.PageSize);
 }
-<div class="row mt-3">
-    <div class="col-md-4">
-        <a class="btn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : string.Empty)"
-           asp-area="Admin" asp-controller="Products" asp-action="All"
-           asp-route-pageIndex="@previousPage"><<</a>
-    </div>
-    <div class="dropdown col-md-4">
-       <div class="dropdown-menu">
-            @for (int i = 1; i <= maxPage; i++)
-            {
-                <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="All" asp-route-pageIndex="@i">@i</a>
-            }
-
-       </div>
-    </div>
-    <div class="col-md-4">
-        <a class="btn btn-outline-primary float-right @(Model.PageIndex == maxPage ? "disabled" : string.Empty)"
-           asp-area="Admin" asp-controller="Products" asp-action="All"
-           asp-route-pageIndex="@(Model.PageIndex + 1)">>></a>
-    </div>
-</div>
-@*<div class="row">
-        @foreach (var product in Model.Products)
-        {
-            <div class="col-md-3">
-                <div class="card mb-4" style="width: 18rem;">
-                    <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Price</p>
-                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary">View more</a>
-                        <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>*@
-
 
 <div class="row mb-4">
     <div class="col-3 offset-9 text-right">
@@ -58,7 +15,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <h6>Results - @Model.TotalItems</h6>
+        <h6>Results - @Model.TotalCount</h6>
     </div>
 </div>
 <ul class="list-group with-checkbox">
@@ -72,7 +29,7 @@
             </div>
         </div>
     </li>
-    @if (Model.TotalItems > 0)
+    @if (Model.TotalCount > 0)
     {
         
         @foreach (var product in Model.Products)
@@ -82,8 +39,11 @@
                     <div class="col-3 adminImg">
                         <img src="~/media/@product.ImageUrl" alt="icon" title="@product.Name"/>
                     </div>
-                    <div class="col-6">
-                        @product.Name
+                    <div class="col-3">
+                        Name: @product.Name
+                    </div>
+                    <div class="col-3">
+                        Price: @product.Price
                     </div>
                     <div class="col-3 text-right">
                         <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
@@ -93,6 +53,7 @@
             </li>
 
         }
+        @(await Component.InvokeAsync<PagerViewComponent>(Model))
     }
     else
     {

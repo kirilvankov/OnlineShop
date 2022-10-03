@@ -1,4 +1,6 @@
-﻿@model ProductListViewModel
+﻿@using OnlineShop.ViewComponents
+@*@model ProductListViewModel*@
+@model PagedResult<ProductViewModel>
 @{
     ViewBag.Title = "All Products";
 
@@ -44,7 +46,7 @@
 </form>
 
 
-@{
+@*@{
     var previousPage = Model.PageIndex - 1;
     if (previousPage < 1)
     {
@@ -52,10 +54,10 @@
     }
 
     var maxPage = Math.Ceiling((double)Model.TotalItems / Model.PageSize);
-}
+}*@
 
-<div class="row">
-    <div class="col-md-6">
+@*<div class="row">
+    <div class="col align-center">
         <a class="btn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : string.Empty)"
            asp-controller="Products" asp-action="All"
            asp-route-pageIndex="@previousPage"
@@ -63,8 +65,8 @@
            asp-route-sorting="@((int)Model.Sorting)"
            asp-route-categoryId="@Model.CategoryId"><i class="fas fa-angle-left"></i> Previous</a>
     </div>
-    <div class="col-md-6">
-        <a class="btn btn-outline-primary float-right @(Model.PageIndex == maxPage ? "disabled" : string.Empty)"
+    <div class="col align-center">
+        <a class="btn btn-outline-primary @(Model.PageIndex == maxPage ? "disabled" : string.Empty)"
            asp-controller="Products" asp-action="All"
            asp-route-pageIndex="@(Model.PageIndex + 1)"
            asp-route-searchTerm="@Model.SearchTerm"
@@ -75,33 +77,24 @@
 <div class="row offset-1 mb-2 mt-2">
     <h5>Results - @Model.TotalItems</h5>
 </div>
-
+*@
 <div class="card-deck">
     @for (int i = 0; i < Model.Products.Count(); i++)
     {
         var product = Model.Products.ElementAt(i);
-        @*<div class="col-md-4">
-    <div class="card mb-4">
-    <img class="card-img-top" width="100" src="@product.ImageUrl" alt="@product.Name">
-    <div class="card-body">
-    <h5 class="card-title">@product.Name</h5>
-    <p class="card-text">@product.Price</p>
-    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary">Details</a>
-    </div>
-    </div>
-    </div>*@
-        <div class="card col-md-4">
-            <div class="embed-responsive embed-responsive-16by9">
-                <img alt="@product.Name" class="card-img-top embed-responsive-item" src="~/media/@product.ImageUrl" />
-            </div>
-            <div class="card-block">
-                <h4 class="card-title">@product.Price</h4>
-                <p class="card-text">@product.Name - Test</p>
-                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-link">Details</a>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="~/media/@product.ImageUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: @product.Price</p>
+                    <a class="card-link" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">Details</a>
+                </div>
             </div>
         </div>
-
     }
+    
+    @(await Component.InvokeAsync<PagerViewComponent>(Model))
 </div>
 @section Scripts{
     <script type="text/javascript">

@@ -12,46 +12,95 @@
     using Microsoft.AspNetCore.Hosting;
 
     using Microsoft.AspNetCore.Mvc;
+    using OnlineShop.Services;
+    using OnlineShop.Services.Models;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class ProductsController : BaseAdminController
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IWebHostEnvironment _env;
+        private readonly IProductService _productService;
 
-        public ProductsController(ApplicationDbContext dbContext, IWebHostEnvironment env)
+        public ProductsController(ApplicationDbContext dbContext, IWebHostEnvironment env, IProductService productService)
         {
             _dbContext = dbContext;
             _env = env;
+            _productService = productService;
         }
 
-        public IActionResult All([FromQuery] AdminProductViewModel query)
+        public async Task<IActionResult> All([FromQuery] LoadProductsRequest request, CancellationToken cancellationToken)
         {
-            var productsQuery = _dbContext.Products.AsQueryable();
-            var totalItems = _dbContext.Products.Count();
-            var allProducts = productsQuery
-                .Skip((query.PageIndex - 1) * query.PageSize)
-                .Take(query.PageSize)
-                .Select(p => new ProductViewModel
-                {
+            //var productsQuery = _dbContext.Products.AsQueryable();
+            //var totalItems = _dbContext.Products.Count();
+            //var allProducts = productsQuery
+            //    .Skip((request.PageIndex - 1) * request.PageSize)
+            //    .Take(request.PageSize)
+            //    .Select(p => new ProductViewModel
+            //    {
 
+            //        Id = p.Id,
+            //        Name = p.Name,
+            //        Description = p.Description,
+            //        Price = p.Price,
+            //        ImageUrl = p.ImageUrl,
+            //        OrderingNumber = p.OrderingNumber,
+            //        CategoryId = p.CategoryId,
+
+            //    }).ToList();
+
+            var query = new AllProductsDto
+            {
+                SearchTerm = request.SearchTerm,
+                Sorting = request.Sorting,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                CategoryId = request.CategoryId,
+                TotalItems = request.TotalItems,
+            };
+
+            var result = await _productService.GetAllProducts(query, cancellationToken);
+
+
+
+            var test = new PagedResult<ProductViewModel>
+            {
+                PageIndex = result.PageIndex,
+                PageSize = result.PageSize,
+                SearchTerm = result.SearchTerm,
+                TotalCount = result.TotalItems,
+                Sorting = result.Sorting,
+                Products = result.Products.Select(p => new ProductViewModel
+                {
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
-                    OrderingNumber = p.OrderingNumber,
                     CategoryId = p.CategoryId,
+                    OrderingNumber = p.OrderingNumber,
+                }).ToList(),
+                Categories = result.Categories.Select(c => new ProductCategoriesViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ParentId = c.ParentId
+                }).ToList()
 
-                }).ToList();
+            };
 
-            return View(new AdminProductViewModel
-            {
-                TotalItems = totalItems,
-                Products = allProducts,
-                PageIndex = query.PageIndex,
-                PageSize = query.PageSize,
-                Categories = GetCategories()
-            });
+
+            return View(test);
+
+            //return View(new AdminProductViewModel
+            //{
+            //    TotalItems = totalItems,
+            //    Products = allProducts,
+            //    PageIndex = query.PageIndex,
+            //    PageSize = query.PageSize,
+            //    Categories = GetCategories()
+            //});
         }
         public IActionResult Add()
         {
@@ -144,6 +193,7 @@
                 return NotFound();
             }
 
+            var fileName = product.ImageName;
             if (product.Image != null)
             {
                 var uploadedFolder = FileSystem.Path.Combine(_env.WebRootPath, "media");
@@ -162,9 +212,9 @@
                         throw new ArgumentException(e.Message);
                     }
                 }
-
+                fileName = UploadFile(product);
             }
-            var fileName = UploadFile(product);
+            
 
             editedProduct.Name = product.Name;
             editedProduct.Description = product.Description;
