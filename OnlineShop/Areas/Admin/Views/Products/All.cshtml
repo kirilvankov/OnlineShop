@@ -18,58 +18,68 @@
         <h6>Results - @Model.TotalCount</h6>
     </div>
 </div>
-<ul class="list-group with-checkbox">
-    <li class="list-group-item bg-light">
+
+@if (Model.TotalCount > 0)
+{
+    <section class="section dashboard">
         <div class="row">
-            <div class="col">
-                Products
-            </div>
-            <div class="col d-flex justify-content-start flex-row-reverse">
-                Actions
-            </div>
-        </div>
-    </li>
-    @if (Model.TotalCount > 0)
-    {
-        
-        @foreach (var product in Model.Products)
-        {
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-3 adminImg">
-                        <img src="~/media/@product.ImageUrl" alt="icon" title="@product.Name"/>
+            <div class="col-12">
+                <div class="card top-selling overflow-auto">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            <!--TODO: refactor this li-->
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
                     </div>
-                    <div class="col-3">
-                        Name: @product.Name
-                    </div>
-                    <div class="col-3">
-                        Price: @product.Price
-                    </div>
-                    <div class="col-3 text-right">
-                        <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
-                        <a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">All Products</h5>
+
+                        <table class="table table-hover table-of-contents">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Preview</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col" style="text-align: right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in Model.Products)
+                                {
+                                    <tr>
+                                        <th scope="row"><img src="/media/@product.ImageUrl" alt=""></th>
+                                        <td> @product.Name</td>
+                                        <td>@product.Price</td>
+                                        <td style="text-align: right">
+                                            <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
+                                            <a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </li>
-
-        }
-        @(await Component.InvokeAsync<PagerViewComponent>(Model))
-    }
-    else
-    {
-        <li class="list-group-item">
-            <div class="alert alert-info">
-                "No results found."
             </div>
-        </li>
-    }
-</ul>
-
-@section Scripts{
-    <script>
-
-    </script>
+        </div>
+    </section>
+    @(await Component.InvokeAsync<PagerViewComponent>(Model))
 }
+else
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        No results found!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 
 
 
