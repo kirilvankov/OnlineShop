@@ -6,6 +6,19 @@
 
 }
 
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link " href="index.html">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+    </ul>
+</aside>
+
 <form method="get" class="mt-3" onchange="sendForm()">
     <div class="row">
         <div class="col-md-4">
@@ -93,7 +106,7 @@
             </div>
         </div>
     }
-    
+
     @(await Component.InvokeAsync<PagerViewComponent>(Model))
 </div>
 @section Scripts{
@@ -101,11 +114,11 @@
 
         let form = document.querySelector('form');
         let timeout = null;
-        
+
         let searchingElement = form.querySelector('input');
         searchingElement.addEventListener('keyup', (e) => {
             clearTimeout(timeout);
-            timeout = setTimeout(function() {
+            timeout = setTimeout(function () {
                 sendForm();
             }, 1000);
         })
@@ -114,12 +127,12 @@
             form.submit();
         }
 
-       let clearSearch = document.querySelector('#clearSearch').addEventListener('click', (e) => {
+        let clearSearch = document.querySelector('#clearSearch').addEventListener('click', (e) => {
             e.preventDefault();
-           if (searchingElement.value != '') {
-               searchingElement.value = '';
-               sendForm();
-           }           
+            if (searchingElement.value != '') {
+                searchingElement.value = '';
+                sendForm();
+            }
         });
     </script>
 } 
