@@ -41,6 +41,7 @@
                 SearchTerm = result.SearchTerm,
                 TotalCount = result.TotalItems,
                 Sorting = result.Sorting,
+                CategoryId = result.CategoryId,
                 Products = result.Products.Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -62,32 +63,7 @@
 
             
             return View(test);
-            //return View(new ProductListViewModel
-            //{
-            //    Products = result.Products.Select(p=> new ProductViewModel 
-            //    { 
-            //        Id = p.Id,
-            //        Name = p.Name,
-            //        Description = p.Description,
-            //        Price = p.Price,
-            //        ImageUrl = p.ImageUrl,
-            //        CategoryId = p.CategoryId,
-            //        OrderingNumber = p.OrderingNumber,
-            //    }),
-            //    TotalItems = result.TotalItems,
-            //    PageIndex = result.PageIndex,
-            //    SearchTerm = result.SearchTerm,
-            //    Sorting = result.Sorting,
-            //    CategoryId = result.CategoryId,
-            //    PageSize = result.PageSize,
-            //    Categories = result.Categories.Select(c => new ProductCategoriesViewModel
-            //    {
-            //        Id = c.Id,
-            //        Name = c.Name,
-            //        ParentId = c.ParentId
-            //    }).ToList()
-            //});
-
+            
         }
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {

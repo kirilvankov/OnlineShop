@@ -32,24 +32,6 @@
 
         public async Task<IActionResult> All([FromQuery] LoadProductsRequest request, CancellationToken cancellationToken)
         {
-            //var productsQuery = _dbContext.Products.AsQueryable();
-            //var totalItems = _dbContext.Products.Count();
-            //var allProducts = productsQuery
-            //    .Skip((request.PageIndex - 1) * request.PageSize)
-            //    .Take(request.PageSize)
-            //    .Select(p => new ProductViewModel
-            //    {
-
-            //        Id = p.Id,
-            //        Name = p.Name,
-            //        Description = p.Description,
-            //        Price = p.Price,
-            //        ImageUrl = p.ImageUrl,
-            //        OrderingNumber = p.OrderingNumber,
-            //        CategoryId = p.CategoryId,
-
-            //    }).ToList();
-
             var query = new AllProductsDto
             {
                 SearchTerm = request.SearchTerm,
@@ -62,15 +44,14 @@
 
             var result = await _productService.GetAllProducts(query, cancellationToken);
 
-
-
-            var test = new PagedResult<ProductViewModel>
+            var model = new PagedResult<ProductViewModel>
             {
                 PageIndex = result.PageIndex,
                 PageSize = result.PageSize,
                 SearchTerm = result.SearchTerm,
                 TotalCount = result.TotalItems,
                 Sorting = result.Sorting,
+                CategoryId = result.CategoryId,
                 Products = result.Products.Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -90,17 +71,7 @@
 
             };
 
-
-            return View(test);
-
-            //return View(new AdminProductViewModel
-            //{
-            //    TotalItems = totalItems,
-            //    Products = allProducts,
-            //    PageIndex = query.PageIndex,
-            //    PageSize = query.PageSize,
-            //    Categories = GetCategories()
-            //});
+            return View(model);
         }
         public IActionResult Add()
         {
@@ -161,8 +132,6 @@
             {
                 return NotFound();
             }
-
-
 
             return View(new ProductFormModel
             {
@@ -225,7 +194,6 @@
             _dbContext.SaveChanges();
 
             return RedirectToAction(nameof(All));
-
         }
 
         //TODO: Create delete product action!

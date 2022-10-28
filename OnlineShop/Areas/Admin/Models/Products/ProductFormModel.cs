@@ -28,6 +28,7 @@
         public string ImageName { get; set; }
 
         [Display(Name="Category")]
+        [Range(1, int.MaxValue, ErrorMessage = "You should select valid category from list.")]
         public int CategoryId { get; set; }
 
         public IEnumerable<ProductCategoriesViewModel> Categories { get; set; }
