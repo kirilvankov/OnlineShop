@@ -24,14 +24,14 @@ namespace OnlineShop.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -51,18 +51,15 @@ namespace OnlineShop.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(FirstNameMaxLength, MinimumLength = UserMinLength)]
+            [StringLength(FirstNameMaxLength, MinimumLength = UserNameMinLength)]
             [Display(Name ="First Name")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(LastNameMaxLength, MinimumLength = UserMinLength)]
+            [StringLength(LastNameMaxLength, MinimumLength = UserNameMinLength)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
-            [Required]
-            [StringLength(AddressMaxLength, MinimumLength = UserMinLength)]
-            public string Address { get; set; }
 
             [Required]
             [EmailAddress]
@@ -93,11 +90,10 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User 
+                var user = new ApplicationUser 
                 { 
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Address = Input.Address,
                     UserName = Input.Email, 
                     Email = Input.Email 
                 };

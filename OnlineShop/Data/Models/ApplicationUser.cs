@@ -7,8 +7,12 @@
 
     using static DataConstants.User;
 
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            Orders = new HashSet<OrderEntity>();
+        }
         [Required]
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; }
@@ -17,13 +21,6 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
-        [Required]
-        [MaxLength(AddressMaxLength)]
-        public string Address { get; set; }
-
-        [MaxLength(AddressMaxLength)]
-        public string DeliveryAddress { get; set; }
-
-        public ICollection<Order> Orders { get; init; } = new List<Order>();
+        public virtual ICollection<OrderEntity> Orders { get; set; }
     }
 }

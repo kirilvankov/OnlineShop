@@ -25,7 +25,7 @@
                 {
                     CreatedAt = o.CreatedAt,
                     UserId = o.UserId,
-                    Items = o.Items.Select(oi => new OrderItemDto
+                    Items = o.Products.Select(oi => new OrderItemDto
                     {
                         Id = oi.Id,
                         ImageUrl = oi.Product.ImageUrl,

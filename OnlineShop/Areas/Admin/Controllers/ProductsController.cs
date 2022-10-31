@@ -109,7 +109,7 @@
             var fileName = UploadFile(product);
 
 
-            var productData = new Product
+            var productData = new ProductEntity
             {
                 Name = product.Name,
                 Description = product.Description,
@@ -202,7 +202,6 @@
             {
                 Id = c.Id,
                 Name = c.Name,
-                ParentId = c.ParentId
             }).ToList();
 
         private bool CategoryExist(int categoryId)

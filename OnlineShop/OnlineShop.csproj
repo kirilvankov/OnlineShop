@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\media\" />
   </ItemGroup>
 

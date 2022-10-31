@@ -88,13 +88,13 @@
             }
             var order = this.data.Orders.Find(orderId);
 
-            var items = this.data.OrderItems.Where(oi => oi.OrderId == orderId).Select(oi => new OrderItemsViewModel
+            var items = this.data.OrderProducts.Where(oi => oi.OrderId == orderId).Select(op => new OrderItemsViewModel
             {
-                Id = oi.Id,
-                ImageUrl = oi.Product.ImageUrl,
-                Name = oi.ProductName,
-                ProductPrice = oi.ProductPrice,
-                Quantity = oi.Quantity
+                Id = op.Id,
+                ImageUrl = op.Product.ImageUrl,
+                Name = op.Product.Name,
+                ProductPrice = op.Product.Price,
+                Quantity = op.Quantity
             }).ToList();
 
             var totalPrice = items.Sum(i => i.ProductPrice);

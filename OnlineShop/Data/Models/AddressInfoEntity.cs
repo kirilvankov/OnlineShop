@@ -1,11 +1,14 @@
-﻿namespace OnlineShop.Models
+﻿namespace OnlineShop.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class AddressInfoViewModel
+    public class AddressInfoEntity
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
-        [Display(Name = "Address")]
         public string AddressLine1 { get; set; }
 
         public string AddressLine2 { get; set; }
@@ -18,15 +21,18 @@
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Required]
         public string PostCode { get; set; }
 
-        [RegularExpression("^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$", ErrorMessage = "Latitude is invaluid")]
         public double? LocationLat { get; set; }
 
-        [RegularExpression("^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$", ErrorMessage = "Longitude is invalid")]
         public double? LocationLng { get; set; }
+
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual ICollection<OrderAddressEntity> Orders { get; set; }
     }
 }

@@ -8,17 +8,24 @@
 
     using Microsoft.AspNetCore.Identity;
 
-    public class Order
+    public class OrderEntity
     {
+        public OrderEntity()
+        {
+            Products = new HashSet<OrderProductEntity>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        [Required]
-        public string UserId { get; init; }
+        public string UserId { get; set; }
 
-        public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual ICollection<OrderProductEntity> Products { get; set; }
+        public virtual ICollection<OrderAddressEntity> Addresses { get; set; }
     }
 }
