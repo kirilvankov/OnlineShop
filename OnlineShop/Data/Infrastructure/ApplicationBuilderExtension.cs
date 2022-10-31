@@ -26,7 +26,7 @@
         }
         private static void SeedAdministrator(IServiceProvider service)
         {
-            var userManager = service.GetRequiredService<UserManager<User>>();
+            var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
 
             Task.Run(async () =>
@@ -39,13 +39,12 @@
 
                 await roleManager.CreateAsync(role);
 
-                var user = new User
+                var user = new ApplicationUser
                 {
                     UserName = AdminConstants.AdministratorEmail,
                     Email = AdminConstants.AdministratorEmail,
                     FirstName = AdminConstants.AdministratorEmail,
                     LastName = AdminConstants.AdministratorEmail,
-                    Address = AdminConstants.AdministratorEmail
                 };
 
                 await userManager.CreateAsync(user, AdminConstants.AdministratorPassword);

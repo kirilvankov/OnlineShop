@@ -54,7 +54,6 @@
                         Description = p.Description,
                         Price = p.Price,
                         ImageUrl = p.ImageUrl,
-                        OrderingNumber = p.OrderingNumber,
                         CategoryId = p.CategoryId
                     }).ToListAsync();
 
@@ -81,7 +80,6 @@
                     Description = p.Description,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
-                    OrderingNumber = p.OrderingNumber,
                     CategoryId = p.CategoryId,
                     Category = p.Category.Name
                 })

@@ -22,7 +22,6 @@
         => await _dbContext.Categories.Select(c => new CategoryDto
         {
             Id = c.Id,
-            ParentId = c.ParentId,
             Name = c.Name
         }).ToListAsync(cancellationToken);
     }

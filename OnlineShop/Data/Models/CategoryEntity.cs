@@ -6,18 +6,21 @@
 
     using static DataConstants.Category;
 
-    public class Category
+    public class CategoryEntity
     {
+        public CategoryEntity()
+        {
+            Products = new HashSet<ProductEntity>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public int? ParentId { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<ProductEntity> Products { get; set; }
     }
 }
