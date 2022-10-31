@@ -13,8 +13,8 @@
     <script src="https://kit.fontawesome.com/77183db042.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
+    <header id="header" class="header d-flex align-items-center">
+        <nav class="header-nav ms-auto navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">OnlineShop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,33 +24,84 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
                         </li>
                         @if (User.IsInRole(AdminConstants.AdministratorRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
                             </li>
                             
                         }
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="All">Products</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="All">Products</a>
                             </li>
 
                     </ul>
                     
                     
                     <partial name="_LoginPartial" />
+
+
                 </div>
             </div>
         </nav>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="/default-avatar-profile-icon.jpg" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Administration</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>Manage Web Content</h6>
+                            <span>Web Designer</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Account Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li>
+            </ul>
+        </nav>
     </header>
+    <br />  
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -65,6 +116,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
+    <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/chart.js/chart.min.js"></script>
+    <script src="/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="/assets/vendor/quill/quill.min.js"></script>
+    <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
+    <script src="/assets/js/main.js" type="module"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -21,16 +21,18 @@
             <div class="col">Quantity: @item.Quantity</div>
             <div class="col">Price: @item.Price</div>
             <div>
-                <a asp-area="" asp-controller="Cart" asp-action="Decrease" asp-route-id="@item.ProductId" class="btn btn-outline-primary">-</a>
-                <a asp-area="" asp-controller="Cart" asp-action="Add" asp-route-id="@item.ProductId" class="btn btn-outline-primary">+</a>
-                <a asp-area="" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Remove</a>
+                <a asp-controller="ShoppingCart" asp-action="Decrease" asp-route-id="@item.ProductId" class="btn btn-outline-primary">-</a>
+                <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@item.ProductId" class="btn btn-outline-primary">+</a>
+                <a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Remove</a>
             </div>
 
         </div>
     }
     @if (Model.StoredItems.Any())
     {
-        <div class="row text-right offset-9">Total Price: @Model.TotalPrice</div>
+        <div class="data-table bottom">
+            <div class="row text-right offset-9">Total Price: @Model.TotalPrice</div>
+        </div>
     }
 </div>
 
