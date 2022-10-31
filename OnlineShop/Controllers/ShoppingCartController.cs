@@ -9,16 +9,16 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    public class CartController : Controller
+    public class ShoppingCartController : Controller
     {
         private readonly IShopppingCartService _cart;
 
-        public CartController(IShopppingCartService cart)
+        public ShoppingCartController(IShopppingCartService cart)
         {
             _cart = cart;
         }
 
-        public IActionResult Cart()//todo: rename this action and view
+        public IActionResult Index()
         {
             CartServiceModel model = _cart.GetCurrentCart();
             return View(model);
@@ -27,21 +27,21 @@
         {
             var result = _cart.AddItem(id);
 
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Remove(int id)
         {
             var result = _cart.RemoveItem(id);
 
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Decrease(int id)
         {
             var result = _cart.Decrease(id);
 
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction(nameof(Index));
         }
     }
 }
