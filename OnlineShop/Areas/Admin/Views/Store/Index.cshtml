@@ -1,0 +1,96 @@
+﻿@using OnlineShop.Models.Store
+@using OnlineShop.Services
+@model AllStoresViewModel
+
+@inject IShortStringService service
+
+
+@{
+    ViewBag.Title = "Stores - Admin";
+
+    var userIsAdmin = User.IsInRole(AdminConstants.AdministratorRoleName);
+}
+
+@if (Model.Stores.Count() > 0)
+{
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card top-selling overflow-auto">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            <!--TODO: refactor this li-->
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Stores</h5>
+
+                        <table class="table table-hover table-of-contents">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" style="text-align: right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var store in Model.Stores)
+                                {
+                                    <tr>
+                                        <td>@service.GetShortString(store.Name)</td>
+                                        <td>@service.GetShortString(store.Description)</td>
+                                        <td><span class="badge">@store.Status</span></td>
+                                        <td style="text-align: right">
+                                            <a asp-controller="Products" asp-action="Edit" asp-route-id="@store.Id" class="btn btn-warning">Edit</a>
+                                            <a asp-controller="Products" asp-action="Delete" asp-route-id="@store.Id" class="btn btn-danger">Delete</a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*@(await Component.InvokeAsync<PagerViewComponent>(Model))*@
+}
+else
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        No results found!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@section Scripts{
+    <script>
+        let badgeElements = document.querySelectorAll('.badge');
+        badgeElements.forEach((el) => {
+
+            switch (el.textContent) {
+                case 'Pending':
+                    el.classList.add('bg-info')
+                    break;
+                case 'NotApproved':
+                    el.classList.add('bg-danger')
+                    break;
+                case 'Approved':
+                    el.classList.add('bg-success')
+                    break;
+                default:
+                    el.classList.add('bg-secondary')
+            }
+        })
+        
+      
+    </script>
+}

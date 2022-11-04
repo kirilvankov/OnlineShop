@@ -1,0 +1,26 @@
+﻿@{
+    var result = ViewData["Success"];
+}
+
+@if (result is not null && (int)result > 0)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Application Result</h5>
+            <p class="card-text">Your application has been accepted. You will receive email confirmation.</p>
+            
+            <a asp-controller="Products" asp-action="All" class="card-link">See all products</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Application Result</h5>
+            <p class="card-text">Something went wrong. Try again later or contact us <a asp-controller="Home" asp-action="Contact" class="card-link">Contacts</a></p>
+
+            <a asp-controller="Products" asp-action="All" class="card-link">See all products</a>
+        </div>
+    </div>
+}

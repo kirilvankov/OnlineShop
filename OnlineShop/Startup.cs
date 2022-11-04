@@ -85,6 +85,8 @@ namespace OnlineShop
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IStoreService, StoreService>();
+            services.AddTransient<IShortStringService, ShortStringService>();
             services.AddControllersWithViews();
 
 
