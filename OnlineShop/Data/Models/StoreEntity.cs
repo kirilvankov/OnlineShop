@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using OnlineShop.Data.Enums;
 
@@ -30,6 +31,8 @@
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+        public virtual AddressInfoEntity AddressInfo { get; set; }
 
         public virtual ICollection<ProductEntity> Products { get; set; }
 

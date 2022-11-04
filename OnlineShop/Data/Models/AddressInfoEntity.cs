@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class AddressInfoEntity
     {
@@ -32,6 +33,11 @@
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        public int StoreId { get; set; }
+
+        [ForeignKey(nameof(StoreId))]
+        public virtual StoreEntity Store { get; set; }
 
         public virtual ICollection<OrderAddressEntity> Orders { get; set; }
     }
