@@ -1,26 +1,30 @@
-﻿namespace OnlineShop.Areas.Admin.Controllers
+﻿namespace OnlineShop.Areas.ShopOwner.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
-
+    using System.Threading;
     using Microsoft.AspNetCore.Mvc;
-
     using OnlineShop.Areas.Admin.Models.Products;
+
     using OnlineShop.Models.Products;
-    using OnlineShop.Services;
+
     using OnlineShop.Services.Models;
 
-    public class ProductsController : BaseAdminController
+    using OnlineShop.Services;
+    using System.Linq;
+    using OnlineShop.Data.Infrastructure;
+
+    public class ProductsController : BaseShopOwnerController
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IStoreService _storeService;
 
-        public ProductsController(IProductService productService, ICategoryService categoryService)
+        public ProductsController(IProductService productService, ICategoryService categoryService, IStoreService storeService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _storeService = storeService;
         }
 
         public async Task<IActionResult> All([FromQuery] LoadProductsRequest request, CancellationToken cancellationToken)
@@ -34,8 +38,14 @@
                 CategoryId = request.CategoryId,
                 TotalItems = request.TotalItems,
             };
+            var userId = User.GetId();
+            var storeId = await _storeService.GetStoreId(userId, cancellationToken);
 
-            var result = await _productService.GetAllAsync(query, cancellationToken);
+            if (storeId == null)
+            {
+                return NotFound();
+            }
+            var result = await _productService.GetAllPerStoreAsync(query, storeId, cancellationToken);
 
             var model = new PagedResult<ProductViewModel>
             {
@@ -95,7 +105,7 @@
             }
             if (!ModelState.IsValid)
             {
-               
+
                 product.Categories = await GetCategories(cancellationToken);
                 return View(product);
             }
@@ -159,7 +169,7 @@
         private async Task<IEnumerable<ProductCategoriesViewModel>> GetCategories(CancellationToken cancellationToken)
         {
             var categories = await _categoryService.GetAllCategories(cancellationToken);
-           return categories.Select(c => new ProductCategoriesViewModel
+            return categories.Select(c => new ProductCategoriesViewModel
             {
                 Id = c.Id,
                 Name = c.Name,

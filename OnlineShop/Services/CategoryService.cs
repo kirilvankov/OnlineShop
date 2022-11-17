@@ -24,5 +24,9 @@
             Id = c.Id,
             Name = c.Name
         }).ToListAsync(cancellationToken);
+
+
+        public bool CategoryExist(int categoryId)
+                => _dbContext.Categories.Any(c => c.Id == categoryId);
     }
 }

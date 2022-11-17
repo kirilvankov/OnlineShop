@@ -32,7 +32,7 @@
                 TotalItems = request.TotalItems,
             };
 
-            var result = await _productService.GetAllProducts(query, cancellationToken);
+            var result = await _productService.GetAllAsync(query, cancellationToken);
 
             var test = new PagedResult<ProductViewModel>
             {
@@ -67,7 +67,7 @@
         }
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {
-            var product = await _productService.GetProductById(id, cancellationToken);
+            var product = await _productService.GetByIdAsync(id, cancellationToken);
             if (product == null)
             {
                 return View("NotFound");
