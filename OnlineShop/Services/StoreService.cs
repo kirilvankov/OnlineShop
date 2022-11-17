@@ -11,7 +11,6 @@
     using OnlineShop.Data.Enums;
     using OnlineShop.Data.Models;
     using OnlineShop.Services.Models;
-    using static OnlineShop.Data.DataConstants;
 
     public class StoreService : IStoreService
     {
@@ -47,9 +46,14 @@
             return res;
         }
 
+        public async Task<int?> GetStoreId(string userId, CancellationToken cancellationToken)
+        {
+            return await _context.Stores.Where(s => s.UserId == userId).Select(s => s.Id).FirstOrDefaultAsync(cancellationToken);
+        }
+
         public async Task<List<StoreDto>> GetStores(CancellationToken cancellationToken)
         {
-            return await _context.Stores.Select(s => new StoreDto ()
+            return await _context.Stores.Select(s => new StoreDto()
             {
                 Id = s.Id,
                 Name = s.Name,

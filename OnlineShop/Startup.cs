@@ -44,34 +44,7 @@ namespace OnlineShop
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddDistributedMemoryCache();
-
-            //services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate(options =>
-            //{
-            //    options.Events = new CertificateAuthenticationEvents
-            //    {
-            //        OnCertificateValidated = context =>
-            //        {
-            //            var claims = new[]
-            //            {
-            //        new Claim(
-            //            ClaimTypes.NameIdentifier,
-            //            context.ClientCertificate.Subject,
-            //            ClaimValueTypes.String, context.Options.ClaimsIssuer),
-            //        new Claim(
-            //            ClaimTypes.Name,
-            //            context.ClientCertificate.Subject,
-            //            ClaimValueTypes.String, context.Options.ClaimsIssuer)
-            //    };
-
-            //            context.Principal = new ClaimsPrincipal(
-            //                new ClaimsIdentity(claims, context.Scheme.Name));
-            //            context.Success();
-
-            //            return Task.CompletedTask;
-            //        }
-            //    };
-            //});
+            //services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
             {
@@ -96,6 +69,7 @@ namespace OnlineShop
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.PrepareAdmin();
+            app.CreateShopOwner();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
