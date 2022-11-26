@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Area(ShopOwnerConstants.AriaName)]
+    [Area(ShopOwnerConstants.AreaName)]
     [Authorize(Roles = ShopOwnerConstants.RoleName)]
     public class BaseShopOwnerController : Controller
     {

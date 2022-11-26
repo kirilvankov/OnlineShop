@@ -41,7 +41,7 @@
                 ModelState.AddModelError("Email", errorMessage: "The Email should be same as signed in.");
             }
             var storeId = await _storeService.GetStoreId(userId, cancellationToken);
-            if (storeId != null)
+            if (storeId.HasValue && storeId != 0)
             {
                 ModelState.AddModelError("Name", "You had already created Store");
             }

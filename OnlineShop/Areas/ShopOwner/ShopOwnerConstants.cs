@@ -2,7 +2,7 @@
 {
     public class ShopOwnerConstants
     {
-        public const string AriaName = "ShopOwner";
+        public const string AreaName = "ShopOwner";
         public const string RoleName = "ShopOwnerAdministrator";
     }
 }

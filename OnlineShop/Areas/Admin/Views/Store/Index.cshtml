@@ -49,8 +49,7 @@
                                         <td>@service.GetShortString(store.Description)</td>
                                         <td><span class="badge">@store.Status</span></td>
                                         <td style="text-align: right">
-                                            <a asp-controller="Products" asp-action="Edit" asp-route-id="@store.Id" class="btn btn-warning">Edit</a>
-                                            <a asp-controller="Products" asp-action="Delete" asp-route-id="@store.Id" class="btn btn-danger">Delete</a>
+                                            <a asp-area="admin" asp-controller="Store" asp-action="Details" asp-route-storeId="@store.Id" class="">Show Details</a>
 
                                         </td>
                                     </tr>
@@ -90,7 +89,7 @@ else
                     el.classList.add('bg-secondary')
             }
         })
-        
+
       
     </script>
 }
