@@ -1,0 +1,78 @@
+﻿@using OnlineShop.Models.Store
+@model StoreDetailsViewModel
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">@Model.Name</div>
+        <div class="card-body">
+            @Model.Description
+        </div>
+        <div class="accordion" id="additionalInfoStore">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#showMore" aria-expanded="false" aria-controls="showMore">
+                        AdditionalInfo
+                    </button>
+                </h2>
+                <div id="showMore" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#additionalInfoStore">
+                    <div class="accordion-body">
+                        @Model.AdditionalInfo
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <span id="colorBadge" class="badge">@Model.Status.ToString()</span>
+        </div>
+    </div>
+    <form method="post">
+        <button id="approveBtn" data-action="approve" type="button" class="btn btn-success">Approve</button>
+        <button id="rejectBtn" data-action="notApprove" type="button" class="btn btn-danger">Not Approve</button>
+    </form>
+</section>
+
+@section Scripts{
+    <script>
+        
+        let colorBadge = document.getElementById('colorBadge');
+        colorBadge.addEventListener('load', paint(colorBadge));
+
+        $('button[data-action]').each(function(el) {
+            $(this).on('click', function () {
+                let action = $(this).attr('data-action');
+                let storeId = @Model.Id;
+                let store = { storeId: storeId, action: action }
+                $.ajax({
+                    type: "Post",
+                    url: '/api/manage',
+                    data: JSON.stringify(store),
+                    contentType: "application/json",
+
+                    success: function (data) {
+                        colorBadge.textContent = data.status;
+                        paint(colorBadge)
+                    },
+                });
+            })
+        })
+        
+        function paint(el) {
+            el.classList.remove('bg-info', 'bg-danger', 'bg-success', 'bg-secondary')
+            switch (el.textContent) {
+                case 'Pending':
+                    el.classList.add('bg-info')
+                    break;
+                case 'NotApproved':
+                    el.classList.add('bg-danger')
+                    break;
+                case 'Approved':
+                    el.classList.add('bg-success')
+                    break;
+                default:
+                    el.classList.add('bg-secondary')
+            }
+        };
+
+    </script>
+}
+

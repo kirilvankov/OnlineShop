@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using OnlineShop.Models;
     using OnlineShop.Models.Store;
     using OnlineShop.Services;
 
@@ -33,5 +34,38 @@
             };
             return View(model);
         }
+
+        public async Task<IActionResult> Details(int storeId, CancellationToken cancellationToken)
+        {
+            var storeDto = await _storeService.GetStore(storeId, cancellationToken);
+
+            if (storeDto == null)
+            {
+                return NotFound();
+            }
+            var result = new StoreDetailsViewModel() 
+            { 
+                Id = storeDto.Id,
+                Name = storeDto.Name,
+                Description = storeDto.Description,
+                AdditionalInfo = storeDto.AdditionalDetails,
+                Status = storeDto.Status,
+                UserId = storeDto.UserId,
+                AddressInfo = new AddressInfoViewModel()
+                {
+                    AddressLine1 = storeDto.AddressInfo.AddressLine1,
+                    AddressLine2 = storeDto.AddressInfo.AddressLine2,
+                    City = storeDto.AddressInfo.City,
+                    PhoneNumber = storeDto.AddressInfo.PhoneNumber,
+                    PostCode = storeDto.AddressInfo.PostCode,
+                    Email = storeDto.AddressInfo.Email,
+                    LocationLat = storeDto.AddressInfo.LocationLat,
+                    LocationLng = storeDto.AddressInfo.LocationLng,
+                }
+            };
+
+            return View(result);
+        }
+
     }
 }

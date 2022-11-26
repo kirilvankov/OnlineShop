@@ -1,23 +1,19 @@
 namespace OnlineShop
 {
-    using OnlineShop.Data;
+    using System;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-
     using Microsoft.AspNetCore.Identity;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
+    using OnlineShop.Data;
     using OnlineShop.Data.Infrastructure;
     using OnlineShop.Data.Models;
-    using System;
     using OnlineShop.Services;
-    using Microsoft.AspNetCore.Authentication.Certificate;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -44,7 +40,6 @@ namespace OnlineShop
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            //services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
             {
@@ -52,7 +47,9 @@ namespace OnlineShop
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
             services.AddHttpContextAccessor();
+
             services.AddTransient<IShoppingCartStorage, ShoppingCartStorage>();
             services.AddTransient<IShopppingCartService, ShoppingCartService>();
             services.AddTransient<IProductService, ProductService>();
@@ -60,6 +57,7 @@ namespace OnlineShop
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IStoreService, StoreService>();
             services.AddTransient<IShortStringService, ShortStringService>();
+
             services.AddControllersWithViews();
 
 
@@ -86,6 +84,10 @@ namespace OnlineShop
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+
+            
+
+                      
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
