@@ -1,6 +1,7 @@
 ﻿namespace OnlineShop.Services
 {
     using System.Linq;
+    using System.Threading.Tasks;
 
     using OnlineShop.Data;
     using OnlineShop.Exceptions;
@@ -103,6 +104,9 @@
             };
         }
 
-        
+        public void ClearCart()
+        {
+            _storage.ClearStorage();
+        }
     }
 }

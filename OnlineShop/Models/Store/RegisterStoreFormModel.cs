@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using OnlineShop.Models.Address;
+
     public class RegisterStoreFormModel
     {
         [Required]
@@ -10,6 +12,6 @@
         [Required]
         public string Description { get; set; }
         public string AdditionalDetails { get; set; }
-        public AddressInfoViewModel AddressInfo { get; set; }
+        public AddressInfoInputModel AddressInfo { get; set; }
     }
 }

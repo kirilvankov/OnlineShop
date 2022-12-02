@@ -34,7 +34,7 @@
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        public int StoreId { get; set; }
+        public int? StoreId { get; set; }
 
         [ForeignKey(nameof(StoreId))]
         public virtual StoreEntity Store { get; set; }

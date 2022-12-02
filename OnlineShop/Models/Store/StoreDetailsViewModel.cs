@@ -1,11 +1,10 @@
 ﻿namespace OnlineShop.Models.Store
 {
-    using OnlineShop.Data.Enums;
-    using OnlineShop.Services.Models;
+    using OnlineShop.Models.Address;
 
     public class StoreDetailsViewModel : StoreViewModel
     {
         public string UserId { get; set; }
-        public AddressInfoViewModel AddressInfo { get; set; }
+        public AddressInfoInputModel AddressInfo { get; set; }
     }
 }

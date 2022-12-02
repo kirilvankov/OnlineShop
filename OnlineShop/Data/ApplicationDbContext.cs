@@ -33,6 +33,12 @@
                 .Entity<ProductEntity>()
                 .Property(p => p.Price).HasColumnType("decimal(18,2)");
 
+            builder.Entity<StoreEntity>()
+                .HasOne(x => x.AddressInfo)
+                .WithOne(x => x.Store)
+                .HasForeignKey<AddressInfoEntity>(x => x.StoreId)
+                .IsRequired(false);
+
 
             builder.Entity<CategoryEntity>().HasData(
                 new CategoryEntity {Id = 1, Name = "Home" },

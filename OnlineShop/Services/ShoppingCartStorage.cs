@@ -6,10 +6,12 @@
     using OnlineShop.Models.Cart;
 
     using Microsoft.AspNetCore.Http;
+    using OnlineShop.Services.Models;
 
     public class ShoppingCartStorage : IShoppingCartStorage
     {
         const string SessionKey = "_ShoppingCartItems";
+        const string SessionAddressKey = "_OrderDeliveryAddress";
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession Session => _httpContextAccessor.HttpContext.Session;
@@ -31,5 +33,19 @@
             Session.SetString(SessionKey, cartString);
         }
 
+        public void ClearStorage()
+        {
+            Session.Clear();
+        }
+        public void SetOrderAddress(AddressInfoDto model)
+        {
+            var addressAsString = JsonSerializer.Serialize(model);
+            Session.SetString(SessionAddressKey, addressAsString);
+        }
+        public AddressInfoDto GetOrderAddress()
+        {
+            var addressAsString = Session.GetString(SessionAddressKey);
+            return string.IsNullOrWhiteSpace(addressAsString) ? null : JsonSerializer.Deserialize<AddressInfoDto>(addressAsString);
+        }
     }
 }
