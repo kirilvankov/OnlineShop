@@ -31,6 +31,8 @@ namespace OnlineShop
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddAutoMapper(typeof(Program));
+
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -57,6 +59,7 @@ namespace OnlineShop
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IStoreService, StoreService>();
             services.AddTransient<IShortStringService, ShortStringService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddControllersWithViews();
 

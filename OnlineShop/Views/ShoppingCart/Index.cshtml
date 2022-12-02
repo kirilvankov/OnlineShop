@@ -5,34 +5,53 @@
 }
 
 
-<div class="col-md-8 offset-2">
+
+@if (!Model.StoredItems.Any())
+{
     <div class="container">
-        @if (!Model.StoredItems.Any())
-        {
+        <div class="col-6 offset-3  align-content-center">
             <h5>Your cart is Empty</h5>
             <a href="/Products/All" class="btn-link">View all products</a>
-        }
-    </div>
-    @foreach (var item in Model.StoredItems)
-    {
-        <div class="row">
-            <img class="img-thumbnail" width="150" height="200" src="~/media/@item.ImageItem" alt="@item.Name" />
-            <div class="col">@item.Name</div>
-            <div class="col">Quantity: @item.Quantity</div>
-            <div class="col">Price: @item.Price</div>
-            <div>
-                <a asp-controller="ShoppingCart" asp-action="Decrease" asp-route-id="@item.ProductId" class="btn btn-outline-primary">-</a>
-                <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@item.ProductId" class="btn btn-outline-primary">+</a>
-                <a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Remove</a>
-            </div>
-
         </div>
-    }
-    @if (Model.StoredItems.Any())
-    {
+
+    </div>
+}
+else
+{
+    <div class="col-md-8 offset-2">
+
+        @foreach (var item in Model.StoredItems)
+        {
+            <div class="row">
+                <img class="img-thumbnail" width="150" height="200" src="~/media/@item.ImageItem" alt="@item.Name" />
+                <div class="col">@item.Name</div>
+                <div class="col">Quantity: @item.Quantity</div>
+                <div class="col">Price: @item.Price</div>
+                <div>
+                    <a asp-controller="ShoppingCart" asp-action="Decrease" asp-route-id="@item.ProductId" class="btn btn-outline-primary">-</a>
+                    <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@item.ProductId" class="btn btn-outline-primary">+</a>
+                    <a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Remove</a>
+                </div>
+
+            </div>
+            <hr />
+        }
+
         <div class="data-table bottom">
             <div class="row text-right offset-9">Total Price: @Model.TotalPrice</div>
         </div>
-    }
-</div>
+
+    </div>
+
+    <br />
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-primary" asp-action="All" asp-controller="Products">Continue Shopping</a>
+            <a class="btn btn-primary offset-9" asp-action="Preview" asp-controller="ShoppingCart">Preview</a>
+        </div>
+    </div>
+}
+
+
 

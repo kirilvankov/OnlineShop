@@ -1,6 +1,6 @@
-﻿namespace OnlineShop.Services.Models
+﻿namespace OnlineShop.Models.Address
 {
-    public class AddressInfoDto
+    public class AddressInfoViewModel
     {
         public string AddressLine1 { get; set; }
 
@@ -17,6 +17,5 @@
         public double? LocationLat { get; set; }
 
         public double? LocationLng { get; set; }
-        public bool IsUserAddress { get; set; }
     }
 }

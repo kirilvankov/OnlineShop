@@ -1,4 +1,4 @@
-﻿ namespace OnlineShop.Areas.Admin.Controllers
+﻿namespace OnlineShop.Areas.Admin.Controllers
 {
     using System.Linq;
     using System.Threading;
@@ -6,7 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using OnlineShop.Models;
+    using OnlineShop.Models.Address;
     using OnlineShop.Models.Store;
     using OnlineShop.Services;
 
@@ -51,7 +51,7 @@
                 AdditionalInfo = storeDto.AdditionalDetails,
                 Status = storeDto.Status,
                 UserId = storeDto.UserId,
-                AddressInfo = new AddressInfoViewModel()
+                AddressInfo = new AddressInfoInputModel()
                 {
                     AddressLine1 = storeDto.AddressInfo.AddressLine1,
                     AddressLine2 = storeDto.AddressInfo.AddressLine2,

@@ -1,5 +1,6 @@
 ﻿namespace OnlineShop.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -8,6 +9,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using OnlineShop.Data;
+    using OnlineShop.Data.Models;
     using OnlineShop.Services.Models;
 
     public class OrderService : IOrderService
@@ -37,5 +39,20 @@
                 })
                 .ToListAsync(cancellationToken);
 
+        public void CreateOrder(string userId, CartServiceModel input, CancellationToken cancellationToken)
+        {
+            //new OrderEntity()
+            //{
+            //    UserId = userId,
+            //    CreatedAt = DateTime.UtcNow,
+            //    Products = input.StoredItems.Select(p => new OrderProductEntity()
+            //    {
+            //        ProductId = p.ProductId,
+            //        Quantity = p.Quantity,
+
+            //    }).ToList()
+            //}
+            
+        }
     }
 }

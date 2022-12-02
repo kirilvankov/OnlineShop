@@ -22,5 +22,7 @@
         public string LastName { get; set; }
 
         public virtual ICollection<OrderEntity> Orders { get; set; }
+
+        public virtual AddressInfoEntity Address { get; set; }
     }
 }
