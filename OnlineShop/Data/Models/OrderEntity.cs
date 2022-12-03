@@ -7,6 +7,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
+    using static OnlineShop.Data.DataConstants;
 
     public class OrderEntity
     {
@@ -20,6 +21,8 @@
         public int Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public virtual PaymentEntity Payment { get; set; }
 
         public string UserId { get; set; }
 

@@ -3,13 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
+    using OnlineShop.Areas.Admin.Models.Orders;
     using OnlineShop.Data;
     using OnlineShop.Data.Models;
+    using OnlineShop.Models.Cart;
     using OnlineShop.Services.Models;
 
     public class OrderService : IOrderService
@@ -39,20 +42,57 @@
                 })
                 .ToListAsync(cancellationToken);
 
-        public void CreateOrder(string userId, CartServiceModel input, CancellationToken cancellationToken)
+        public async Task<int> CreateOrder(CreateOrderInputModel input, CancellationToken cancellationToken)
         {
-            //new OrderEntity()
-            //{
-            //    UserId = userId,
-            //    CreatedAt = DateTime.UtcNow,
-            //    Products = input.StoredItems.Select(p => new OrderProductEntity()
-            //    {
-            //        ProductId = p.ProductId,
-            //        Quantity = p.Quantity,
+            var payment = new PaymentEntity()
+            {
+                TransactionId = input.Transaction.TransactionId,
+                Status = input.Transaction.Status,
+                CurrencyCode = input.Transaction.Amount.currency_code,
+                CurrencyValue = input.Transaction.Amount.Value,
+                CreatedOn = input.Transaction.create_time,
+            };
+            var order = new OrderEntity()
+            {
+                UserId = input.UserId,
+                CreatedAt = DateTime.UtcNow,
+                Payment = payment,
+            };
 
-            //    }).ToList()
-            //}
-            
+            var products = input.Products.Select(p => new OrderProductEntity()
+            {
+                ProductId = p.ProductId,
+                Quantity = p.Quantity,
+                Order = order,
+            }).ToList();
+
+            var address = new AddressInfoEntity()
+            {
+                AddressLine1 = input.AddressInfo.AddressLine1,
+                AddressLine2 = input.AddressInfo.AddressLine2,
+                PhoneNumber = input.AddressInfo.PhoneNumber,
+                City = input.AddressInfo.City,
+                Email = input.AddressInfo.Email,
+                PostCode = input.AddressInfo.PostCode,
+                LocationLat = input.AddressInfo.LocationLat,
+                LocationLng = input.AddressInfo.LocationLng,
+            };
+
+            order.Products = products;
+            payment.Order = order;
+
+            var orderAddress = new OrderAddressEntity()
+            {
+                Order = order,
+                AddressInfo = address,
+            };
+
+            await _dbContext.OrderProducts.AddRangeAsync(products);
+            await _dbContext.OrderAddresses.AddAsync(orderAddress);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return order.Id;
         }
     }
 }

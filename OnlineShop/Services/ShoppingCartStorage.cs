@@ -35,7 +35,8 @@
 
         public void ClearStorage()
         {
-            Session.Clear();
+            Session.SetString(SessionKey, string.Empty);
+            Session.SetString(SessionAddressKey, string.Empty);
         }
         public void SetOrderAddress(AddressInfoDto model)
         {
