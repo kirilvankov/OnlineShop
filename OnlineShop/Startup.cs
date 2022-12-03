@@ -13,6 +13,7 @@ namespace OnlineShop
     using OnlineShop.Data;
     using OnlineShop.Data.Infrastructure;
     using OnlineShop.Data.Models;
+    using OnlineShop.Models.Cart;
     using OnlineShop.Services;
 
     public class Startup
@@ -30,6 +31,8 @@ namespace OnlineShop
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.Configure<PaypalConfiguration>(Configuration.GetSection("PaypalConfig"));
 
             services.AddAutoMapper(typeof(Program));
 

@@ -41,5 +41,13 @@
 
             public const int StoreAdditionalInfoMaxLength = 3000;
         }
+        public class Payment
+        {
+            public const int TransactionMaxLength = 50;
+
+            public const int StatusMaxLength = 25;
+
+            public const int CurrencyCodeMaxLength = 15;
+        }
     }
 }

@@ -58,7 +58,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Preview(CancellationToken cancellationToken)
+        public async Task<IActionResult> Checkout(CancellationToken cancellationToken)
         {
             var userId = User.GetId();
             var tempAddress = _storage.GetOrderAddress();
@@ -80,6 +80,7 @@
                 Cart = cart,
                 UserDetails = new OrderUserViewModel()
                 {
+                    UserId = userId,
                     FirstName = userDetails.FirstName,
                     LastName = userDetails.LastName,
                     AddressInfo = new AddressInfoViewModel()
@@ -152,20 +153,7 @@
                 _storage.SetOrderAddress(model);
             }
             
-            return RedirectToAction(nameof(Preview));
-        }
-
-        [Authorize]
-        public IActionResult Payment()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult Payment(object o)
-        {
-            return View();
+            return RedirectToAction(nameof(Checkout));
         }
     }
 }

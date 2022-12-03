@@ -27,11 +27,17 @@
 
         public DbSet<OrderAddressEntity> OrderAddresses { get; set; }
 
+        public DbSet<PaymentEntity> Payments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder
-                .Entity<ProductEntity>()
-                .Property(p => p.Price).HasColumnType("decimal(18,2)");
+            builder.Entity<ProductEntity>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Entity<PaymentEntity>()
+             .Property(x => x.CurrencyValue)
+             .HasColumnType("decimal(18,2)");
 
             builder.Entity<StoreEntity>()
                 .HasOne(x => x.AddressInfo)
@@ -47,6 +53,8 @@
                 new CategoryEntity {Id = 4, Name = "Shoes" },
                 new CategoryEntity {Id = 5, Name = "Toys" },
                 new CategoryEntity {Id = 6, Name = "Health" });
+
+         
 
             base.OnModelCreating(builder);
         }

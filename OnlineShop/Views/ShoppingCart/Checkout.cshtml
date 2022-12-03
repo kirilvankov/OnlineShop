@@ -1,0 +1,171 @@
+﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Options
+@using OnlineShop.Models.Cart
+@using System.Text.Json
+@inject IOptions<PaypalConfiguration> options;
+@model PreviewOrderViewModel
+
+@{
+    ViewData["Title"] = "Preview";
+    var config = options.Value;
+    var buttonText = string.IsNullOrEmpty(Model.UserDetails.AddressInfo.AddressLine1) ? "Enter Address" : "Edit Address";
+    var productsInCart = JsonSerializer.Serialize(Model.Cart.StoredItems);
+}
+
+<div id="checkout">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Delivery Details</h5>
+                    <hr />
+                    <h6 class="card-subtitle mb-2 font-weight-bold">First Name: @Model.UserDetails.FirstName</h6>
+                    <h6 class="card-subtitle mb-2 font-weight-bold">Last Name: @Model.UserDetails.LastName</h6>
+                    <hr />
+                    <h6 class="card-subtitle mb-2 font-weight-bold align-content-center">Delivery Address</h6>
+                    <hr />
+                    @if (string.IsNullOrEmpty(Model.UserDetails.AddressInfo.AddressLine1))
+                    {
+                        <span>You should enter delivery address.</span>
+                    }
+                    else
+                    {
+                        <span>Address: @Model.UserDetails.AddressInfo.AddressLine1 <br /></span>
+                        if (!string.IsNullOrEmpty(@Model.UserDetails.AddressInfo.AddressLine2))
+                        {
+                            <span>Address 2: @Model.UserDetails.AddressInfo.AddressLine2 <br /></span>
+                        }
+
+                        <span>Phone: @Model.UserDetails.AddressInfo.PhoneNumber <br /></span>
+                        <span>Town: @Model.UserDetails.AddressInfo.City <br /></span>
+                        <span>PostCode: @Model.UserDetails.AddressInfo.PostCode <br /></span>
+                    }
+                    <p class="card-text"><a asp-action="Address" asp-controller="ShoppingCart" class="btn btn-primary">@buttonText</a></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+
+            @foreach (var item in Model.Cart.StoredItems)
+            {
+                <div class="row">
+                    <img class="img-thumbnail" width="150" height="200" src="~/media/@item.ImageItem" alt="@item.Name" />
+                    <div class="col">@item.Name</div>
+                    <div class="col">Quantity: @item.Quantity</div>
+                    <div class="col">Price: @item.Price</div>
+
+
+                </div>
+                <hr />
+            }
+
+            <div class="data-table bottom">
+                <div class="row text-right offset-9">Total Price: @Model.Cart.TotalPrice</div>
+            </div>
+            <br />
+
+            <div class="offset-9">
+                <button id="paymentBtn" class="btn btn-outline-primary">Payment</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="payment" class="container offset-3">
+        <div id="paypal-button-container"></div>
+
+    </div>
+</div>
+<div class="row" id="result" style="display: none">
+    <div class="col-6 offset-3">
+        <div class="container justify-content-center">
+            <h1>Thank You!</h1>
+           
+            <p>Order submitted successfully!</p>
+
+            <a href="~/" class="btn btn-success">Back to Home</a>
+            
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+        let paymentContainer = document.getElementById('payment');
+        paymentContainer.style.display = 'none';
+
+        let paymentBtn = document.getElementById('paymentBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.target.style.display = 'none'
+            paymentContainer.style.display = 'block';
+        });
+
+
+    </script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AU4E30w3qIW7jTZxEAX5gd344p3kc9nSJcmuMazkyvZUeEYnNMVh7ePCV2mZsoFObPtNyI3tMO4ll84J&currency=EUR"></script>
+
+    <script>
+        let checkoutElement = document.getElementById('checkout');
+        let resultElement = document.getElementById('result');
+        paypal.Buttons({
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: @Model.Cart.TotalPrice 
+                        }
+                    }]
+                });
+            },
+            
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(function (orderData) {
+                    const transaction = orderData.purchase_units[0].payments.captures[0];
+                    storeOrder(transaction.id, transaction.status, transaction.amount, transaction.create_time);
+                });
+            }
+        }).render('#paypal-button-container');
+
+        function storeOrder(transactionId, status, amount, createTime) {
+
+            let order = {
+                userId: '@Html.Raw(Model.UserDetails.UserId)',
+                firstname: '@Html.Raw(Model.UserDetails.FirstName)',
+                lastname: '@Html.Raw(Model.UserDetails.LastName)',
+                totalprice: @Model.Cart.TotalPrice,
+                addressinfo: {
+                    addressline1: '@Html.Raw(Model.UserDetails.AddressInfo.AddressLine1)',
+                    addressline2: '@Html.Raw(Model.UserDetails.AddressInfo.AddressLine2)',
+                    city: '@Html.Raw(Model.UserDetails.AddressInfo.City)',
+                    email: '@Html.Raw(Model.UserDetails.AddressInfo.Email)',
+                    phonenumber: '@Html.Raw(Model.UserDetails.AddressInfo.PhoneNumber)',
+                    postcode: '@Html.Raw(Model.UserDetails.AddressInfo.PostCode)',
+                },
+                transaction: {
+                    transactionId: transactionId,
+                    status: status,
+                    amount: {
+                        currency_code: amount.currency_code,
+                        value: amount.value
+                    },
+                    create_time: createTime
+                },
+                products: @Html.Raw(productsInCart),
+            }
+            $.ajax({
+                type: "Post",
+                url: '/api/Order',
+                data: JSON.stringify(order),
+                contentType: "application/json",
+
+                success: function (data) {
+                    checkoutElement.style.display = 'none';
+                    resultElement.style.display = 'block';
+                },
+            })
+        }
+    </script>
+}
