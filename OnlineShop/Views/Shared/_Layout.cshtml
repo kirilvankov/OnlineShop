@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using OnlineShop.Areas.ShopOwner
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,13 +24,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
-                        </li>
-
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="All">Products</a>
                         </li>
@@ -39,7 +39,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
                             </li>
-
+                        }
+                        @if(User.IsInRole(ShopOwnerConstants.RoleName))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="ShopOwner" asp-controller="Products" asp-action="All">Manage-Products</a>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />

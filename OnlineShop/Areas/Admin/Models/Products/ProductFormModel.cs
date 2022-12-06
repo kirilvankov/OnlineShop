@@ -25,7 +25,7 @@
         [Display(Name = "Image")]
         public IFormFile Image { get; set; }
 
-        public string ImageName { get; set; }
+        public string ImageUrl { get; set; }
 
         [Display(Name="Category")]
         [Range(1, int.MaxValue, ErrorMessage = "You should select valid category from list.")]

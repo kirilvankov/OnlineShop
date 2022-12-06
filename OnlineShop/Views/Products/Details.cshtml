@@ -1,47 +1,20 @@
 ﻿@model DetailsProductViewModel
 
-    @*<div class="btn" >
-        <div class="row">
-                <div class="card col-6 offset-2 text-center">
-                    <img src="/media/@Model.ImageUrl" width="600" height="300" class="img-fluid">
-
-
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.Price</h5>
-                        <p class="card-text">@Model.Description</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">@Model.Name</li>
-                        <li class="list-group-item">@Model.Category</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-
-                    </div>
-                </div>
-                <div class="col-md-1"><a id="like"><i class="far fa-heart"></i></a></div>
-    
-            <div class="col">
-                <a class="btn btn-outline-primary btn-lg" type="submit" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id"><i class="fas fa-cart-arrow-down"></i> Add to cart</a>
-            </div>
-        </div>
-    </div>*@
-
-<div class="card mb-3">
-    <div class="row g-0">
+@{
+    ViewData["Title"] = "Details";
+}
+    <div class="row">
         <div class="col-md-4">
-            <img src="~/media/@Model.ImageUrl" class="img-fluid rounded-start" alt="...">
+            <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">@Model.Name</h5>
-                <p class="card-text">@Model.Description</p>
+                <p class="card-text">Description: @Model.Description</p>
+                <span>Price: @Model.Price</span>
             </div>
             <div class="action-button">
                 <a class="btn btn-outline-primary btn-lg" type="submit" asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id"><i class="fas fa-cart-arrow-down"></i> Add to cart</a>
             </div>
         </div>
-    </div>
-</div>
-
-    
+    </div>    

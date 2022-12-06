@@ -34,7 +34,6 @@
     <Folder Include="Areas\ShopOwner\Data\" />
     <Folder Include="Areas\ShopOwner\Models\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="wwwroot\media\" />
   </ItemGroup>
 
 </Project>
