@@ -1,6 +1,7 @@
 ﻿namespace OnlineShop.Services
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,25 +23,31 @@
         private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _environment;
 
-        public ProductService(ApplicationDbContext dbContext, ICategoryService categoryService, IWebHostEnvironment environment)
+        public ProductService(ApplicationDbContext dbContext,
+            ICategoryService categoryService,
+            IWebHostEnvironment environment)
         {
             _dbContext = dbContext;
             _categoryService = categoryService;
             _environment = environment;
         }
 
-        public async Task AddAsync(ProductFormModel product, CancellationToken cancellationToken)
+        public async Task AddAsync(ProductFormModel product, int? storeId, CancellationToken cancellationToken)
         {
-            var fileName = UploadFile(product);
-
-
+            string imageUrl = product.ImageUrl;
+            if (product.Image != null)
+            {
+                imageUrl = UploadFile(product);
+            }
+            
             var productData = new ProductEntity
             {
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                ImageUrl = fileName,
-                CategoryId = product.CategoryId
+                ImageUrl = imageUrl,
+                CategoryId = product.CategoryId,
+                StoreId = storeId,
             };
 
             await _dbContext.AddAsync(productData, cancellationToken);
@@ -56,36 +63,40 @@
                 return null;
             }
 
-            var fileName = product.ImageName;
+            var imageUrl = product.ImageUrl;
             if (product.Image != null)
             {
-                var uploadedFolder = FileSystem.Path.Combine(_environment.WebRootPath, "media");
-                var filePath = FileSystem.Path.Combine(uploadedFolder, product.ImageName);
-
-                if (FileSystem.File.Exists(filePath))
+                if (imageUrl.StartsWith("/media/"))
                 {
-                    try
-                    {
-                        FileSystem.File.Delete(filePath);
+                    var imageName = imageUrl.Replace("/media/", string.Empty);
+                    var uploadedFolder = Path.Combine(_environment.WebRootPath, "media");
+                    string filePath = Path.Combine(uploadedFolder, imageName);
 
-                    }
-                    catch (Exception e)
-                    {
-
-                        throw new ArgumentException(e.Message);
-                    }
+                    DeleteFile(filePath);
                 }
-                fileName = UploadFile(product);
+                
+                imageUrl = UploadFile(product);
             }
-
+            else
+            {
+                if (editedProduct.ImageUrl.StartsWith("/media/") && imageUrl != editedProduct.ImageUrl)
+                {
+                    var imageName = editedProduct.ImageUrl.Replace("/media/", string.Empty);
+                    var uploadedFolder = Path.Combine(_environment.WebRootPath, "media");
+                    string filePath = Path.Combine(uploadedFolder, imageName);
+                    
+                    DeleteFile(filePath);
+                }
+            }
 
             editedProduct.Name = product.Name;
             editedProduct.Description = product.Description;
             editedProduct.Price = product.Price;
-            editedProduct.ImageUrl = fileName;
+            editedProduct.ImageUrl = imageUrl;
             editedProduct.CategoryId = product.CategoryId;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+
             return editedProduct.Id;
         }
 
@@ -206,25 +217,68 @@
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
+        public async Task DeleteAsync(int id, CancellationToken cancellation)
+        {
+            var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+
+            string imageUrl = product.ImageUrl;
+            string filePath = string.Empty;
+            if (imageUrl.StartsWith("/media/"))
+            {
+                var imageName = imageUrl.Replace("/media/", string.Empty);
+                var uploadedFolder = Path.Combine(_environment.WebRootPath, "media");
+                filePath = Path.Combine(uploadedFolder, imageName);
+            }
+
+            _dbContext.Products.Remove(product);
+
+            DeleteFile(filePath);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
 
         private string UploadFile(ProductFormModel product)
         {
-            string imageFile = null;
+            string imageUrl = null;
 
             if (product.Image != null)
             {
-                var uploadedFolder = FileSystem.Path.Combine(_environment.WebRootPath, "media");
-                imageFile = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
+                var uploadedFolder = Path.Combine(_environment.WebRootPath, "media");
+                string imageFile = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
+                string filePath = Path.Combine(uploadedFolder, imageFile);
 
-                var filePath = FileSystem.Path.Combine(uploadedFolder, imageFile);
-
-                using (FileSystem.FileStream fs = new FileSystem.FileStream(filePath, FileSystem.FileMode.Create))
+                try
                 {
-                    product.Image.CopyTo(fs);
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        product.Image.CopyTo(fs);
+                    }
+                    imageUrl = "/media/" + imageFile;
                 }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(e.Message);
+                }
+
+                
             }
 
-            return imageFile;
+            return imageUrl;
+        }
+        private void DeleteFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(e.Message);
+                }
+            }
         }
     }
 }

@@ -8,35 +8,32 @@
     <h2 class="text-center">Add Product</h2>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" placeholder="Name">
+        <label asp-for="@Model.Name"></label>
+        <input asp-for="@Model.Name" class="form-control" placeholder="Name">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Description of product..."></textarea>
+        <label asp-for="@Model.Description"></label>
+        <textarea asp-for="@Model.Description" class="form-control" rows="4" placeholder="Description of product..."></textarea>
+        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Price"></label>
+        <input asp-for="@Model.Price" class="form-control" placeholder="0.00">
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" placeholder="0.00">
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    @if (Model.ImageName != null)
-    {
-        <div class="form-group">
-            <label asp-for="ImageName"></label>
-            <input asp-for="ImageName" class="form-control" placeholder="Image name">
-        </div>
-    }
-    <div class="form-group">
-        <label asp-for="Image"></label>
-        <input type="file" name="Image" asp-for="Image" class="form-control" placeholder="Image...">
-        <span asp-validation-for="Image" class="text-danger"></span>
+        <label asp-for="@Model.ImageUrl"></label>
+        <input asp-for="@Model.ImageUrl" class="form-control" placeholder="Image name">
     </div>
     <div class="form-group">
-        <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" class="form-control">
+        <label asp-for="@Model.Image"></label>
+        <input type="file" name="Image" asp-for="@Model.Image" class="form-control" placeholder="Choosing a file will take advantage over the image Url. ">
+        <span asp-validation-for="@Model.Image" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.CategoryId"></label>
+        <select asp-for="@Model.CategoryId" class="form-control">
             <option value="0">Select Category</option>
             @foreach (var category in Model.Categories)
             {

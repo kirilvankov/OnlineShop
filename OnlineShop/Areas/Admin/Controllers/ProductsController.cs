@@ -78,9 +78,10 @@
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormModel product, CancellationToken cancellationToken)
         {
-            if (product.Image == null)
+            
+            if (product.Image == null && string.IsNullOrEmpty(product.ImageUrl))
             {
-                ModelState.AddModelError("Image", "Field image is required!");
+                ModelState.AddModelError("Image", "Field image is required when imageUrl is empty!");
             }
 
             if (product.Image != null && product.Image.Length > 10 * 1024 * 1024)
@@ -88,11 +89,11 @@
                 ModelState.AddModelError("file", "File is too large!");
             }
 
-
             if (!_categoryService.CategoryExist(product.CategoryId))
             {
                 ModelState.AddModelError("Category", "Invalid Category");
             }
+
             if (!ModelState.IsValid)
             {
                
@@ -100,10 +101,9 @@
                 return View(product);
             }
 
-            await _productService.AddAsync(product, cancellationToken);
+            await _productService.AddAsync(product, null, cancellationToken);
 
             return RedirectToAction(nameof(All));
-
         }
         public async Task<IActionResult> Edit(int id, CancellationToken cancellationToken)
         {
@@ -119,7 +119,7 @@
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                ImageName = product.ImageUrl,
+                ImageUrl = product.ImageUrl,
                 CategoryId = product.CategoryId,
                 Categories = await GetCategories(cancellationToken)
             });
@@ -155,7 +155,13 @@
             };
             return View(viewRes);
         }
-        //TODO: Create delete product action!
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        {
+            await _productService.DeleteAsync(id, cancellationToken);
+            return RedirectToAction(nameof(All));
+        }
         private async Task<IEnumerable<ProductCategoriesViewModel>> GetCategories(CancellationToken cancellationToken)
         {
             var categories = await _categoryService.GetAllCategories(cancellationToken);
