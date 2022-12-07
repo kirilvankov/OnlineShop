@@ -141,10 +141,10 @@
             return RedirectToAction(result == null ? nameof(All) : nameof(Details), new { id = result });
         }
 
-        public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)// todo: create view
+        public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {
             var result = await _productService.GetByIdAsync(id, cancellationToken);
-            var viewRes = new DetailsProductViewModel()
+            var viewModel = new DetailsProductViewModel()
             {
                 Id = result.Id,
                 Name = result.Name,
@@ -153,7 +153,7 @@
                 ImageUrl = result.ImageUrl,
                 Category = result.Category,
             };
-            return View(viewRes);
+            return View(viewModel);
         }
 
         [HttpPost]
