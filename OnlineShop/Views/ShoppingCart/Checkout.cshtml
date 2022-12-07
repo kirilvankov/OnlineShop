@@ -50,7 +50,7 @@
             @foreach (var item in Model.Cart.StoredItems)
             {
                 <div class="row">
-                    <img class="img-thumbnail" width="150" height="200" src="~/media/@item.ImageItem" alt="@item.Name" />
+                    <img class="img-thumbnail" width="150" height="200" src="@item.ImageItem" alt="@item.Name" />
                     <div class="col">@item.Name</div>
                     <div class="col">Quantity: @item.Quantity</div>
                     <div class="col">Price: @item.Price</div>

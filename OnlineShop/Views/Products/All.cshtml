@@ -52,7 +52,7 @@
         var product = Model.Products.ElementAt(i);
         <div class="col-md-4">
             <div class="card">
-                <img src="~/media/@product.ImageUrl" class="card-img-top" alt="...">
+                <img src="@product.ImageUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">Price: @product.Price</p>
