@@ -42,7 +42,7 @@
                 })
                 .ToListAsync(cancellationToken);
 
-        public async Task<int> CreateOrder(CreateOrderInputModel input, CancellationToken cancellationToken)
+        public async Task<int> CreateOrder(CreateOrderInputModelDto input, CancellationToken cancellationToken)
         {
             var payment = new PaymentEntity()
             {

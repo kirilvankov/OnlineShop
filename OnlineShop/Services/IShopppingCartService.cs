@@ -15,5 +15,8 @@
         CartServiceModel GetCurrentCart();
 
         void ClearCart();
+
+        void SetOrderAddress(AddressInfoDto model);
+        AddressInfoDto GetOrderAddress();
     }
 }

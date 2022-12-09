@@ -3,12 +3,16 @@
     using AutoMapper;
 
     using OnlineShop.Models.Address;
+    using OnlineShop.Services.Models;
 
     public class OnLineShopProfile : Profile
     {
         public OnLineShopProfile()
         {
-            CreateMap<AddressInfoViewModel, AddressInfoInputModel>();
+            CreateMap<AddressInfoDto, AddressInfoInputModel>()
+                .ReverseMap();
+            CreateMap<AddressInfoDto, AddressInfoViewModel>()
+                .ReverseMap();
         }
     }
 }

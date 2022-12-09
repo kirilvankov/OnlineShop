@@ -5,6 +5,6 @@
     public class StoreDetailsViewModel : StoreViewModel
     {
         public string UserId { get; set; }
-        public AddressInfoInputModel AddressInfo { get; set; }
+        public AddressInfoViewModel AddressInfo { get; set; }
     }
 }

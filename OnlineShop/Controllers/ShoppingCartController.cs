@@ -20,14 +20,12 @@
     {
         private readonly IShopppingCartService _shoppingCartService;
         private readonly IUserService _userService;
-        private readonly IShoppingCartStorage _storage;
         private readonly IMapper _mapper;
 
-        public ShoppingCartController(IShopppingCartService shoppingCartService, IUserService userService, IShoppingCartStorage storage, IMapper mapper)
+        public ShoppingCartController(IShopppingCartService shoppingCartService, IUserService userService, IMapper mapper)
         {
             _shoppingCartService = shoppingCartService;
             _userService = userService;
-            _storage = storage;
             _mapper = mapper;
         }
 
@@ -61,11 +59,24 @@
         public async Task<IActionResult> Checkout(CancellationToken cancellationToken)
         {
             var userId = User.GetId();
-            var tempAddress = _storage.GetOrderAddress();
+            var tempAddress = _shoppingCartService.GetOrderAddress();
             var userDetails = await _userService.GetUserDetails(userId, cancellationToken);
+
+            AddressInfoDto orderAddress = null;
+
+            if (tempAddress == null && userDetails.AddressInfo?.AddressLine1 == null)
+            {
+                return RedirectToAction(nameof(Address));
+            }
+
+            if (userDetails.AddressInfo?.AddressLine1 != null)
+            {
+                orderAddress = userDetails.AddressInfo;
+            }
+
             if (tempAddress != null)
             {
-                userDetails.AddressInfo = tempAddress;
+                orderAddress = tempAddress;
             }
 
             CartServiceModel cart = _shoppingCartService.GetCurrentCart();
@@ -83,22 +94,14 @@
                     UserId = userId,
                     FirstName = userDetails.FirstName,
                     LastName = userDetails.LastName,
-                    AddressInfo = new AddressInfoViewModel()
-                    {
-                        AddressLine1 = userDetails.AddressInfo.AddressLine1,
-                        AddressLine2 = userDetails.AddressInfo.AddressLine2,
-                        PhoneNumber = userDetails.AddressInfo.PhoneNumber,
-                        City = userDetails.AddressInfo.City,
-                        Email = userDetails.AddressInfo.Email,
-                        PostCode = userDetails.AddressInfo.PostCode,
-                        
-                    }
+                    AddressInfo = _mapper.Map<AddressInfoViewModel>(orderAddress),
+                    
                 }
             };
 
-            if (viewModel.UserDetails.AddressInfo.AddressLine1 != null)
+            if (viewModel.UserDetails.AddressInfo != null)
             {
-                TempData["EditAddress"] = JsonSerializer.Serialize(viewModel.UserDetails.AddressInfo);
+                _shoppingCartService.SetOrderAddress(orderAddress);
             }
             
             return View(viewModel);
@@ -107,17 +110,13 @@
         [Authorize]
         public IActionResult Address()
         {
-            string modelAsString = null;
-            if (TempData["EditAddress"] != null)
-            {
-                modelAsString = TempData["EditAddress"].ToString();
-            }
+
+            var address = _shoppingCartService.GetOrderAddress();
             
-            if (!string.IsNullOrWhiteSpace(modelAsString))
+            if (address != null)
             {
-                var editModel = JsonSerializer.Deserialize<AddressInfoViewModel>(modelAsString);
-                var model = _mapper.Map<AddressInfoInputModel>(editModel);
-                return View(model);
+                var inputModel = _mapper.Map<AddressInfoInputModel>(address);
+                return View(inputModel);
             }
             
             return View();
@@ -133,24 +132,16 @@
                 return View(input);
             }
 
-            var model = new AddressInfoDto()
-            {
-                AddressLine1 = input.AddressLine1,
-                AddressLine2 = input.AddressLine2,
-                PhoneNumber = input.PhoneNumber,
-                City = input.City,
-                PostCode = input.PostCode,
-                Email = input.Email,
-                IsUserAddress = input.IsUserAddress,
-            };
+            var model = _mapper.Map<AddressInfoDto>(input); 
 
             if (input.IsUserAddress)
             {
                 _userService.SetUserAddress(model, userId);
+                _shoppingCartService.SetOrderAddress(model);
             }
             else
             {
-                _storage.SetOrderAddress(model);
+                _shoppingCartService.SetOrderAddress(model);
             }
             
             return RedirectToAction(nameof(Checkout));

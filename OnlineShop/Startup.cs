@@ -5,6 +5,7 @@ namespace OnlineShop
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +54,11 @@ namespace OnlineShop
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+
             services.AddHttpContextAccessor();
 
             services.AddTransient<IShoppingCartStorage, ShoppingCartStorage>();
@@ -64,7 +70,10 @@ namespace OnlineShop
             services.AddTransient<IShortStringService, ShortStringService>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
 
         }
