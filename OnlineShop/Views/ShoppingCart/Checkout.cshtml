@@ -9,7 +9,7 @@
     ViewData["Title"] = "Preview";
     var config = options.Value;
     var buttonText = string.IsNullOrEmpty(Model.UserDetails.AddressInfo.AddressLine1) ? "Enter Address" : "Edit Address";
-    var productsInCart = JsonSerializer.Serialize(Model.Cart.StoredItems);
+    
 }
 
 <div id="checkout">
@@ -91,6 +91,8 @@
 
     </div>
 </div>
+
+<form method="post"></form>
 @section Scripts{
     <script>
         let paymentContainer = document.getElementById('payment');
@@ -101,8 +103,6 @@
             e.target.style.display = 'none'
             paymentContainer.style.display = 'block';
         });
-
-
     </script>
 
     <script src="https://www.paypal.com/sdk/js?client-id=AU4E30w3qIW7jTZxEAX5gd344p3kc9nSJcmuMazkyvZUeEYnNMVh7ePCV2mZsoFObPtNyI3tMO4ll84J&currency=EUR"></script>
@@ -120,31 +120,17 @@
                     }]
                 });
             },
-            
             onApprove: (data, actions) => {
                 return actions.order.capture().then(function (orderData) {
                     const transaction = orderData.purchase_units[0].payments.captures[0];
-                    storeOrder(transaction.id, transaction.status, transaction.amount, transaction.create_time);
+                    storeTransaction(transaction.id, transaction.status, transaction.amount, transaction.create_time);
                 });
             }
         }).render('#paypal-button-container');
 
-        function storeOrder(transactionId, status, amount, createTime) {
-
-            let order = {
-                userId: '@Html.Raw(Model.UserDetails.UserId)',
-                firstname: '@Html.Raw(Model.UserDetails.FirstName)',
-                lastname: '@Html.Raw(Model.UserDetails.LastName)',
-                totalprice: @Model.Cart.TotalPrice,
-                addressinfo: {
-                    addressline1: '@Html.Raw(Model.UserDetails.AddressInfo.AddressLine1)',
-                    addressline2: '@Html.Raw(Model.UserDetails.AddressInfo.AddressLine2)',
-                    city: '@Html.Raw(Model.UserDetails.AddressInfo.City)',
-                    email: '@Html.Raw(Model.UserDetails.AddressInfo.Email)',
-                    phonenumber: '@Html.Raw(Model.UserDetails.AddressInfo.PhoneNumber)',
-                    postcode: '@Html.Raw(Model.UserDetails.AddressInfo.PostCode)',
-                },
-                transaction: {
+        function storeTransaction(transactionId, status, amount, createTime) {
+            let token = document.querySelector('input[name=__RequestVerificationToken]').value;
+            let transaction = {
                     transactionId: transactionId,
                     status: status,
                     amount: {
@@ -152,15 +138,15 @@
                         value: amount.value
                     },
                     create_time: createTime
-                },
-                products: @Html.Raw(productsInCart),
             }
             $.ajax({
                 type: "Post",
                 url: '/api/Order',
-                data: JSON.stringify(order),
+                data: JSON.stringify(transaction),
                 contentType: "application/json",
-
+                headers: {
+                    "X-CSRF-TOKEN": token
+                },
                 success: function (data) {
                     checkoutElement.style.display = 'none';
                     resultElement.style.display = 'block';

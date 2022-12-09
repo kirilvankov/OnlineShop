@@ -108,5 +108,15 @@
         {
             _storage.ClearStorage();
         }
+
+        public AddressInfoDto GetOrderAddress()
+        {
+            return _storage.GetOrderAddress();
+        }
+
+        public void SetOrderAddress(AddressInfoDto model)
+        {
+            _storage.SetOrderAddress(model);
+        }
     }
 }

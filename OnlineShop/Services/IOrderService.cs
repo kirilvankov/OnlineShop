@@ -10,6 +10,6 @@
     public interface IOrderService
     {
         Task<List<OrderDto>> GetUserOrders(string userId, CancellationToken cancellationToken);
-        Task<int> CreateOrder(CreateOrderInputModel input, CancellationToken cancellationToken);
+        Task<int> CreateOrder(CreateOrderInputModelDto input, CancellationToken cancellationToken);
     }
 }

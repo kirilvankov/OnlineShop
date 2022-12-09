@@ -4,6 +4,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Mvc;
 
     using OnlineShop.Models.Address;
@@ -13,10 +15,12 @@
     public class StoreController : BaseAdminController
     {
         private readonly IStoreService _storeService;
+        private readonly IMapper _mapper;
 
-        public StoreController(IStoreService storeService)
+        public StoreController(IStoreService storeService, IMapper mapper)
         {
             _storeService = storeService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
@@ -43,25 +47,15 @@
             {
                 return NotFound();
             }
-            var result = new StoreDetailsViewModel() 
-            { 
+            var result = new StoreDetailsViewModel()
+            {
                 Id = storeDto.Id,
                 Name = storeDto.Name,
                 Description = storeDto.Description,
                 AdditionalInfo = storeDto.AdditionalDetails,
                 Status = storeDto.Status,
                 UserId = storeDto.UserId,
-                AddressInfo = new AddressInfoInputModel()
-                {
-                    AddressLine1 = storeDto.AddressInfo.AddressLine1,
-                    AddressLine2 = storeDto.AddressInfo.AddressLine2,
-                    City = storeDto.AddressInfo.City,
-                    PhoneNumber = storeDto.AddressInfo.PhoneNumber,
-                    PostCode = storeDto.AddressInfo.PostCode,
-                    Email = storeDto.AddressInfo.Email,
-                    LocationLat = storeDto.AddressInfo.LocationLat,
-                    LocationLng = storeDto.AddressInfo.LocationLng,
-                }
+                AddressInfo = _mapper.Map<AddressInfoViewModel>(storeDto.AddressInfo)
             };
 
             return View(result);

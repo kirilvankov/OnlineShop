@@ -4,19 +4,52 @@
 <section class="section">
     <div class="card">
         <div class="card-header">@Model.Name</div>
-        <div class="card-body">
-            @Model.Description
+        <div class="accordion" id="storeDescription">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="description">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#showDescription" aria-expanded="false" aria-controls="showDescription">
+                        Store Description
+                    </button>
+                </h2>
+                <div id="showDescription" class="accordion-collapse collapse" aria-labelledby="description" data-bs-parent="#storeDescription">
+                    <div class="accordion-body">
+                        @Model.Description
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="accordion" id="additionalInfoStore">
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#showMore" aria-expanded="false" aria-controls="showMore">
+                <h2 class="accordion-header" id="additionalInfo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#showAdditionalInfo" aria-expanded="false" aria-controls="showAdditionalInfo">
                         AdditionalInfo
                     </button>
                 </h2>
-                <div id="showMore" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#additionalInfoStore">
+                <div id="showAdditionalInfo" class="accordion-collapse collapse" aria-labelledby="additionalInfo" data-bs-parent="#additionalInfoStore">
                     <div class="accordion-body">
                         @Model.AdditionalInfo
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion" id="storeAddress">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="address">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#showAddress" aria-expanded="false" aria-controls="showAddress">
+                        Store Address
+                    </button>
+                </h2>
+                <div id="showAddress" class="accordion-collapse collapse" aria-labelledby="address" data-bs-parent="#storeAddress">
+                    <div class="accordion-body">
+                        <span>Address: @Model.AddressInfo.AddressLine1 <br /></span>
+                        @if (!string.IsNullOrEmpty(@Model.AddressInfo.AddressLine2))
+                        {
+                            <span>Address 2: @Model.AddressInfo.AddressLine2 <br /></span>
+                        }
+
+                        <span>Phone: @Model.AddressInfo.PhoneNumber <br /></span>
+                        <span>Town: @Model.AddressInfo.City <br /></span>
+                        <span>PostCode: @Model.AddressInfo.PostCode <br /></span>
                     </div>
                 </div>
             </div>
@@ -41,13 +74,16 @@
             $(this).on('click', function () {
                 let action = $(this).attr('data-action');
                 let storeId = @Model.Id;
-                let store = { storeId: storeId, action: action }
+                let store = { storeId: storeId, action: action };
+                let token = document.querySelector('input[name=__RequestVerificationToken]').value;
                 $.ajax({
                     type: "Post",
                     url: '/api/manage',
                     data: JSON.stringify(store),
                     contentType: "application/json",
-
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    },
                     success: function (data) {
                         colorBadge.textContent = data.status;
                         paint(colorBadge)

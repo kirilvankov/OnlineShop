@@ -21,6 +21,7 @@
         {
            return await _dbContext.Users.Where(x => x.Id == userId).Select(x => new OrderUserDetailsDto()
            {
+               Id = x.Id,
                FirstName = x.FirstName,
                LastName = x.LastName,
                AddressInfo = new AddressInfoDto()
@@ -33,7 +34,7 @@
                    City = x.Address.City,
                    LocationLat = x.Address.LocationLat,
                    LocationLng = x.Address.LocationLng,
-               }
+               },
            }).FirstOrDefaultAsync(cancellationToken);
         }
 
