@@ -203,9 +203,10 @@
         }
 
         public async Task<ProductDto> GetByIdAsync(int productId, CancellationToken cancellationToken)
-            => await _dbContext.Products
+        { 
+            var productEntity = await _dbContext.Products
                 .Where(p => p.Id == productId)
-                .Select(p => new ProductDto
+                .Select(p => new 
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -213,9 +214,29 @@
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
                     CategoryId = p.CategoryId,
-                    Category = p.Category.Name
+                    Category = p.Category.Name,
+                    StoreId = p.StoreId,
                 })
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if (productEntity == null)
+            {
+                return null;
+            }
+            return new ProductDto()
+            {
+                Id = productEntity.Id,
+                Name = productEntity.Name,
+                Description = productEntity.Description,
+                Price = productEntity.Price,
+                ImageUrl = productEntity.ImageUrl,
+                CategoryId = productEntity.CategoryId,
+                Category = productEntity.Category,
+                StoreId = productEntity?.StoreId
+            };
+        }
+            
+
 
         public async Task DeleteAsync(int id, CancellationToken cancellation)
         {
