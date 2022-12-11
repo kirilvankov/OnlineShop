@@ -19,11 +19,11 @@
             _dbContext = dbContext;
         }
         public async Task<List<CategoryDto>> GetAllCategories(CancellationToken cancellationToken)
-        => await _dbContext.Categories.Select(c => new CategoryDto
-        {
-            Id = c.Id,
-            Name = c.Name
-        }).ToListAsync(cancellationToken);
+            => await _dbContext.Categories.Select(c => new CategoryDto
+                                                   {
+                                                       Id = c.Id,
+                                                       Name = c.Name
+                                                   }).ToListAsync(cancellationToken);
 
 
         public bool CategoryExist(int categoryId)
