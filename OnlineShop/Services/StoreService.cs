@@ -48,8 +48,8 @@
                 }
             };
             await _context.AddAsync(store, cancellationToken);
-            var res = await _context.SaveChangesAsync();
-            return res;
+            await _context.SaveChangesAsync();
+            return store.Id;
         }
 
         public async Task<Status> ApproveStore(int storeId, CancellationToken cancellationToken)

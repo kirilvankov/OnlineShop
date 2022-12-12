@@ -35,14 +35,14 @@
             var tempAddress = _shopppingCart.GetOrderAddress();
             var userDetails = await _userService.GetUserDetails(userId, cancellationToken);
 
-            var OrderAddress = new AddressInfoDto();
+            var orderAddress = new AddressInfoDto();
             if (tempAddress != null)
             {
-                OrderAddress = tempAddress;
+                orderAddress = tempAddress;
             }
             else
             {
-                OrderAddress = userDetails.AddressInfo;
+                orderAddress = userDetails.AddressInfo;
             }
 
             var model = new CreateOrderInputModelDto()
@@ -53,12 +53,14 @@
                 TotalPrice = products.TotalPrice,
                 Transaction = input,
                 Products = products.StoredItems,
-                AddressInfo = OrderAddress,
+                AddressInfo = orderAddress,
             };
-           var result = await _orderService.CreateOrder(model, cancellationToken);
 
-           _shopppingCart.ClearCart();
-           return CreatedAtAction("CreateOrder", new { id = result });
+            var result = await _orderService.CreateOrder(model, cancellationToken);
+
+            _shopppingCart.ClearCart();
+
+            return CreatedAtAction("CreateOrder", new { id = result });
         }
     }
 }
