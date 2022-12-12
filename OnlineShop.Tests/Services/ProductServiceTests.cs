@@ -571,5 +571,94 @@
                 .And
                 .HaveCount(2);
         }
+
+        [Fact]
+        public async Task GetAllPerStoreAsyncShouldReturnAllProducts()
+        {
+            //Arrange
+            var dbContext = DbContextMock.Instance;
+
+            dbContext.Stores.Add(new StoreEntity() { Id = 1, Name = "TestStore1", Description = "Store Description", AdditionalInfo = "Store Additional info"});
+            dbContext.Categories.Add(new CategoryEntity() { Id = 1, Name = "Category1" });
+            dbContext.Categories.Add(new CategoryEntity() { Id = 2, Name = "Category2" });
+            dbContext.Categories.Add(new CategoryEntity() { Id = 3, Name = "Category3" });
+            dbContext.Products.Add(new ProductEntity()
+            {
+                Id = 1,
+                Name = "T-shirt",
+                Description = "Comfortable and suitable",
+                Price = 10.00m,
+                ImageUrl = "/test/imageUrl",
+                CategoryId = 1,
+                StoreId= 1,
+            });
+            dbContext.Products.Add(new ProductEntity()
+            {
+                Id = 2,
+                Name = "Hair Mask",
+                Description = "A weekly, clinically tested mask that strengthens damaged hair and helps prevent future damage.",
+                Price = 15.00m,
+                ImageUrl = "/test/imageUrl",
+                CategoryId = 2,
+                StoreId = 1,
+            });
+            dbContext.Products.Add(new ProductEntity()
+            {
+                Id = 3,
+                Name = "Car",
+                Description = "Motor vehicle with wheels.",
+                Price = 5000.00m,
+                ImageUrl = "/test/imageUrl",
+                CategoryId = 3,
+                StoreId = 1,
+            });
+            dbContext.SaveChanges();
+
+            var model = new AllProductsDto()
+            {
+                PageIndex = 1,
+                PageSize = 2,
+                SearchTerm = "",
+                Sorting = Models.Products.Sorting.Unknown,
+                CategoryId = null,
+            };
+
+            var categoryService = new CategoryService(dbContext);
+            var productService = new ProductService(dbContext, categoryService, _webHostEnvironmentMock.Object);
+
+            var expectedProductsResult = new List<ProductDto>()
+            {
+                new ProductDto()
+                {
+                    Id = 3,
+                    Name = "Car",
+                    Description = "Motor vehicle with wheels.",
+                    Price = 5000.00m,
+                    ImageUrl = "/test/imageUrl",
+                    CategoryId = 3,
+                },
+                new ProductDto()
+                {
+                    Id = 2,
+                    Name = "Hair Mask",
+                    Description = "A weekly, clinically tested mask that strengthens damaged hair and helps prevent future damage.",
+                    Price = 15.00m,
+                    ImageUrl = "/test/imageUrl",
+                    CategoryId = 2,
+                }
+            };
+
+            //Act
+            var result = await productService.GetAllPerStoreAsync(model, 1, CancellationToken.None);
+
+
+            //Assert
+            result.Products.Should()
+                .NotBeEmpty()
+                .And
+                .BeEquivalentTo(expectedProductsResult)
+                .And
+                .HaveCount(2);
+        }
     }
 }
