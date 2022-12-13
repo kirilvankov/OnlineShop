@@ -11,7 +11,7 @@
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/Admin/Products/All");
         }
     }
 }

@@ -108,7 +108,9 @@
 
         public async Task<int?> GetStoreId(string userId, CancellationToken cancellationToken)
         {
-            return await _context.Stores.Where(s => s.UserId == userId).Select(s => s.Id).FirstOrDefaultAsync(cancellationToken);
+            var store = await _context.Stores.FirstOrDefaultAsync(s => s.UserId == userId, cancellationToken);
+
+            return store == null ? null : store.Id;
         }
 
         public async Task<List<StoreDto>> GetStores(CancellationToken cancellationToken)
