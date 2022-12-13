@@ -70,7 +70,6 @@
                     addressUser.Email = address.Email;
                     
                 }
-                
             }
             
             _dbContext.SaveChanges();
