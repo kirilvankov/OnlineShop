@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">@Model.Name</h5>
                 <p class="card-text">Description: @Model.Description</p>
-                <span>Price: @Model.Price</span>
+            <span>Price: @Model.Price <i class="bi bi-currency-euro"></i></span>
             </div>
             <div class="action-button">
                 <a class="btn btn-outline-primary btn-lg" type="submit" asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id"><i class="fas fa-cart-arrow-down"></i> Add to cart</a>

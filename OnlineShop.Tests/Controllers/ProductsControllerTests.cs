@@ -15,6 +15,9 @@
 
     using Xunit;
 
+    using AngleSharp;
+    using AngleSharp.Html.Dom;
+
     public class ProductsControllerTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
@@ -55,21 +58,19 @@
 
         }
 
-        //[Fact]
-        //public async Task DetailsShouldReturnNotFoundIfProductNotExist()
-        //{
-        //    //Arrange
-        //    var client = _customWebApplicationFactory.CreateClient();
-        //    //Act
-        //    var response = await client.GetAsync("/Products/Details/-1");
+        [Fact]
+        public async Task DetailsShouldReturnNotFoundIfProductNotExist()
+        {
+            //Arrange
+            var client = _customWebApplicationFactory.CreateClient();
 
-        //    var x = response.Content.ReadAsStringAsync();
+            //Act
+            var response = await client.GetAsync("/Products/Details/-1");
 
+            //Assert
+            Assert.NotNull(response);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
-        //    //Assert
-        //    Assert.NotNull(response);
-        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-
-        //}
+        }
     }
 }
