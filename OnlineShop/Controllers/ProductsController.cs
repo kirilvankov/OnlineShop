@@ -70,7 +70,7 @@
             var product = await _productService.GetByIdAsync(id, cancellationToken);
             if (product == null)
             {
-                return View("NotFound");
+                return NotFound();
             }
 
             return View(new DetailsProductViewModel

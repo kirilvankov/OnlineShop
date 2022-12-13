@@ -55,7 +55,7 @@
                 <img src="@product.ImageUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text">Price: @product.Price</p>
+                    <p class="card-text icon">Price: @product.Price <i class="bi bi-currency-euro"></i></p>
                     <a class="card-link" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">Details</a>
                 </div>
             </div>
