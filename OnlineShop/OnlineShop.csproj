@@ -9,9 +9,17 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\ShopOwner\Data\**" />
+    <Compile Remove="Areas\ShopOwner\Models\**" />
     <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\ShopOwner\Data\**" />
+    <Content Remove="Areas\ShopOwner\Models\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\ShopOwner\Data\**" />
+    <EmbeddedResource Remove="Areas\ShopOwner\Models\**" />
     <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\ShopOwner\Data\**" />
+    <None Remove="Areas\ShopOwner\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,8 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\ShopOwner\Data\" />
-    <Folder Include="Areas\ShopOwner\Models\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
