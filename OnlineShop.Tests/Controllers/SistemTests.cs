@@ -4,60 +4,41 @@
 
     using FluentAssertions;
 
-    using Microsoft.AspNetCore.Mvc;
-
     using Moq;
 
-    using OnlineShop.Controllers;
     using OnlineShop.Services;
-    using OnlineShop.Services.Models;
     using OnlineShop.Tests.Helpers;
 
     using Xunit;
 
-    using AngleSharp;
-    using AngleSharp.Html.Dom;
-
-    public class ProductsControllerTest : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class SystemTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
 
         private readonly Mock<IProductService> _productServiceMock;
-        public ProductsControllerTest(CustomWebApplicationFactory<Startup> customWebApplicationFactory)
+        public SystemTests(CustomWebApplicationFactory<Startup> customWebApplicationFactory)
         {
             _customWebApplicationFactory = customWebApplicationFactory;
             _productServiceMock = new Mock<IProductService>();
         }
 
-        [Fact]
-        public async Task AllShouldReturnNotEmptyResponse()
+        [Theory]
+        [InlineData("/")]
+        [InlineData("/Products/All")]
+        [InlineData("/Products/Details/1")]
+        [InlineData("/Store/Apply")]
+        public async Task AllShouldReturnNotEmptyResponse(string url)
         {
             //Arrange
             var client = _customWebApplicationFactory.CreateClient();
             //Act
-            var response = await client.GetAsync("/Products/All");
-
+            var response = await client.GetAsync(url);
 
             //Assert
             Assert.NotNull(response);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
-
-        [Fact]
-        public async Task DetailsShouldReturnViewWhenProductExist()
-        {
-
-            //Arrange
-            var client = _customWebApplicationFactory.CreateClient();
-            //Act
-            var response = await client.GetAsync("/Products/Details/1");
-
-            //Assert
-            Assert.NotNull(response);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-        }
-
+                
         [Fact]
         public async Task DetailsShouldReturnNotFoundIfProductNotExist()
         {

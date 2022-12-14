@@ -25,6 +25,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="OnlineShop.Tests.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineShop\OnlineShop.csproj" />

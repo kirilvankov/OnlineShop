@@ -25,7 +25,7 @@
         }
 
         [Authorize]
-        public IActionResult Apply()
+        public async Task<IActionResult> Apply()
         {
             return View();
         }
@@ -68,9 +68,9 @@
                 }
             };
 
-            var res = await _storeService.Apply(dto, userId, cancellationToken);
+            var result = await _storeService.Apply(dto, userId, cancellationToken);
             
-            return RedirectToAction(nameof(ApplyResult), new { result = res });
+            return RedirectToAction(nameof(ApplyResult), new { result = result });
         }
 
         public IActionResult ApplyResult(int? result)
