@@ -105,6 +105,7 @@
 
             return RedirectToAction(nameof(All));
         }
+
         public async Task<IActionResult> Edit(int id, CancellationToken cancellationToken)
         {
             var product = await _productService.GetByIdAsync(id, cancellationToken);
@@ -130,10 +131,8 @@
         {
             if (!ModelState.IsValid)
             {
-                return View(new ProductFormModel
-                {
-                    Categories = await GetCategories(cancellationToken)
-                });
+                product.Categories = await GetCategories(cancellationToken);
+                return View(product);
             }
 
             var result = await _productService.EditAsync(id, product, cancellationToken);

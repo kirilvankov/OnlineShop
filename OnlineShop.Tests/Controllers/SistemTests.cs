@@ -15,11 +15,9 @@
     {
         private readonly CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
 
-        private readonly Mock<IProductService> _productServiceMock;
         public SystemTests(CustomWebApplicationFactory<Startup> customWebApplicationFactory)
         {
             _customWebApplicationFactory = customWebApplicationFactory;
-            _productServiceMock = new Mock<IProductService>();
         }
 
         [Theory]
