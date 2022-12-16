@@ -74,8 +74,6 @@ namespace OnlineShop
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
-
-
         }
 
 
@@ -98,10 +96,7 @@ namespace OnlineShop
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-
-            
-
-                      
+                                  
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

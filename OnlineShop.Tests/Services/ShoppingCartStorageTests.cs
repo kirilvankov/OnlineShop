@@ -41,7 +41,6 @@
                 .BeEquivalentTo(items)
                 .And
                 .HaveCount(2);
-
         }
 
         [Fact]

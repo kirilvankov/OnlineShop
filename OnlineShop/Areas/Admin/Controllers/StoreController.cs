@@ -36,6 +36,7 @@
                     Status = s.Status,
                 }).ToList(),
             };
+
             return View(model);
         }
 
@@ -60,6 +61,5 @@
 
             return View(result);
         }
-
     }
 }

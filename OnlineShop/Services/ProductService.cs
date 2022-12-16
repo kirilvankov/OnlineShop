@@ -148,6 +148,7 @@
                 Products = allProducts,
                 Categories = allCategories
             };
+
             return result;
         }
 
@@ -199,6 +200,7 @@
                 Products = allProducts,
                 Categories = allCategories
             };
+
             return result;
         }
 
@@ -281,8 +283,6 @@
                 {
                     throw new ArgumentException(e.Message);
                 }
-
-                
             }
 
             return imageUrl;

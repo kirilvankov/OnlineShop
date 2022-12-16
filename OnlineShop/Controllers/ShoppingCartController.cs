@@ -110,7 +110,6 @@
         [Authorize]
         public IActionResult Address()
         {
-
             var address = _shoppingCartService.GetOrderAddress();
             
             if (address != null)

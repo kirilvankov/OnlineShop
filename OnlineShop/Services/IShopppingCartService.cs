@@ -1,7 +1,5 @@
 ﻿namespace OnlineShop.Services
 {
-    using System.Threading.Tasks;
-
     using OnlineShop.Services.Models;
 
     public interface IShopppingCartService
@@ -17,6 +15,7 @@
         void ClearCart();
 
         void SetOrderAddress(AddressInfoDto model);
+
         AddressInfoDto GetOrderAddress();
     }
 }

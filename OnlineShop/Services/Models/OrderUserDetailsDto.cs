@@ -1,7 +1,5 @@
 ﻿namespace OnlineShop.Services.Models
 {
-    using System.Data.Common;
-
     public class OrderUserDetailsDto
     {
         public string Id { get; set; }

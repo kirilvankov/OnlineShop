@@ -53,7 +53,6 @@
                 .BeOfType<List<ProductCategoriesViewModel>>()
                 .And
                 .HaveCount(2);
-
         }
 
         [Fact]
@@ -290,6 +289,7 @@
                     CategoryId = 2,
                 }
             };
+
             return products;
         }
 
@@ -300,6 +300,7 @@
                 new CategoryDto() { Id = 1, Name = "Category1" },
                 new CategoryDto() { Id = 2, Name = "Category2" }
             };
+
             return categories;
         }
     }

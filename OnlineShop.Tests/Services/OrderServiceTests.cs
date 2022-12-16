@@ -36,7 +36,6 @@
 					.BeOfType<List<OrderItemDto>>()
 					.And
 					.HaveCount(2));
-
 		}
 
 		[Fact]
@@ -74,7 +73,6 @@
 			//Assert
 			Assert.NotEqual(0, result);
 			Assert.Equal(4, result);
-			
 		}
 
 		private ApplicationDbContext CreateDbContext()
@@ -114,7 +112,6 @@
 				}
 			};
 
-
 			dbContext.Products.AddRange(products);
 
 			dbContext.Users.Add(new ApplicationUser() { Id = "FirstUserId", FirstName = "FirstName", LastName = "LastName" });
@@ -126,8 +123,7 @@
 
 			dbContext.Orders.Add(new OrderEntity() { Id = 1, UserId = "FirstUserId" });
 			dbContext.Orders.Add(new OrderEntity() { Id = 2, UserId = "SecondUserId" });
-			dbContext.Orders.Add(new OrderEntity() { Id = 3, UserId = "FirstUserId" });
-			
+			dbContext.Orders.Add(new OrderEntity() { Id = 3, UserId = "FirstUserId" });			
 
 			dbContext.SaveChanges();
 

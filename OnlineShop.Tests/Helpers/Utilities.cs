@@ -13,14 +13,12 @@
     {
         public static void InitializeDbForTests(ApplicationDbContext db)
         {
-            //db.Categories.AddRange(GetSeedingCategories());
             db.Products.AddRange(GetSeedingProducts());
             db.SaveChanges();
         }
 
         public static void ReinitializeDbForTests(ApplicationDbContext db)
         {
-            //db.Categories.RemoveRange(db.Categories);
             db.Products.RemoveRange(db.Products);
             InitializeDbForTests(db);
         }
@@ -34,15 +32,5 @@
                 new ProductEntity(){ Id = 3, CategoryId = 3, Name = "TestProduct3", Description = "Test description3", Price = 12.99m, ImageUrl = "testImageUrl3", StoreId = null }
             };
         }
-
-        //public static List<CategoryEntity> GetSeedingCategories()
-        //{
-        //    return new List<CategoryEntity>()
-        //    {
-        //        new CategoryEntity(){ Id = 1, Name = "HomeTest"},
-        //        new CategoryEntity(){ Id = 2, Name = "HealthTest"},
-        //        new CategoryEntity(){ Id = 3, Name = "ClothesTest"}
-        //    };
-        //}
     }
 }

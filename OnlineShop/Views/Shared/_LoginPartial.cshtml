@@ -10,15 +10,12 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index" title="Cart"><i class="fas fa-cart-arrow-down">  Cart</i></a>
         </li>
         <li class="nav-item dropdown pe-3 ms-auto">
-
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                 <img src="/default-avatar-profile-icon.jpg" alt="Profile" class="rounded-circle">
                 <span class="d-none d-md-block dropdown-toggle ps-2 ml-1">@User.Identity.Name!</span>
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-
-
                 <li>
                     <a class="dropdown-item d-flex align-items-center" asp-area="Identity" asp-page="/Account/Manage/Index">
                         <i class="bi bi-person"></i>
@@ -28,8 +25,6 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-
-
                 <li>
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                         <button type="submit" class="dropdown-item d-flex align-items-center">
@@ -38,7 +33,6 @@
                         </button>
                     </form>
                 </li>
-
             </ul>
         </li>
     }

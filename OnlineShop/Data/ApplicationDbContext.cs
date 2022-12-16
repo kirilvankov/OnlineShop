@@ -54,8 +54,6 @@
                 new CategoryEntity {Id = 5, Name = "Toys" },
                 new CategoryEntity {Id = 6, Name = "Health" });
 
-         
-
             base.OnModelCreating(builder);
         }
     }

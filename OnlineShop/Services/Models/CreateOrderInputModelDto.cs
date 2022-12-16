@@ -1,9 +1,9 @@
 ﻿namespace OnlineShop.Services.Models
 {
-    using OnlineShop.Areas.Admin.Models.Orders;
-    using OnlineShop.Models.Address;
-    using OnlineShop.Models.Cart;
     using System.Collections.Generic;
+
+    using OnlineShop.Areas.Admin.Models.Orders;
+    using OnlineShop.Models.Cart;
 
     public class CreateOrderInputModelDto
     {

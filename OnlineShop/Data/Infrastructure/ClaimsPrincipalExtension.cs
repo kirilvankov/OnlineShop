@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Data.Infrastructure
 {
-
     using System.Security.Claims;
 
     public static class ClaimsPrincipalExtension

@@ -1,7 +1,6 @@
 ﻿namespace OnlineShop.Areas.Admin.Models.Orders
 {
     using System;  
-    
 
     public class TransactionInputModel
     {

@@ -4,14 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
+
     using FluentAssertions;
 
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+
     using Moq;
-    using OnlineShop.Areas.Admin.Models.Products;
+
     using OnlineShop.Controllers;
     using OnlineShop.Models.Orders;
     using OnlineShop.Services;
@@ -69,7 +70,6 @@
                                             .AllBeAssignableTo<IEnumerable<OrderItemsViewModel>>()
                                             .And
                                             .HaveCount(2));
-
         }
 
         private List<OrderDto> GetUserOrders()

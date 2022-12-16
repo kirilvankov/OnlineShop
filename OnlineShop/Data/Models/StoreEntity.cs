@@ -1,9 +1,7 @@
 ﻿namespace OnlineShop.Data.Models
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using OnlineShop.Data.Enums;
 
@@ -35,6 +33,5 @@
         public virtual AddressInfoEntity AddressInfo { get; set; }
 
         public virtual ICollection<ProductEntity> Products { get; set; }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Models.Orders
 {
-    using OnlineShop.Models.Address;
     using OnlineShop.Models.User;
     using OnlineShop.Services.Models;
 

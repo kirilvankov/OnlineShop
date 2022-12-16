@@ -16,8 +16,6 @@
 
     public class ShoppingCartServiceTests
     {
-
-
         [Fact]
         public void AddItemShouldAddProductToCart()
         {

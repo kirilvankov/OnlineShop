@@ -9,6 +9,7 @@
     public interface ICategoryService
     {
         Task<List<CategoryDto>> GetAllCategories(CancellationToken cancellationToken);
+
         bool CategoryExist(int categoryId);
     }
 }

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Xml.Linq;
+
     using OnlineShop.Areas.Admin.Models.Products;
 
     public class PagedResult<T> where T : class

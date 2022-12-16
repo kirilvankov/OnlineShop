@@ -23,6 +23,7 @@
         {
             var itemsInCart = _storage.Retrieve();
             var existingItemInCart = itemsInCart.SingleOrDefault(s => s.ProductId == id);
+
             if (existingItemInCart != null)
             {
                 existingItemInCart.Quantity++;
@@ -35,7 +36,6 @@
                     throw new ItemNotFoundException("Item not found");
                 }
 
-
                 itemsInCart.Add(new ShoppingCartStoredItem
                 {
                     ProductId = item.Id,
@@ -45,7 +45,6 @@
                     Quantity = 1
 
                 });
-
             }
 
             _storage.Store(itemsInCart);

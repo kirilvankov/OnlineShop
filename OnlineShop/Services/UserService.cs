@@ -51,7 +51,6 @@
                 Email = address.Email,
                 UserId = userId,
                 IsPrimary= address.IsPrimary,
-                
             };
 
             if (address.IsPrimary)

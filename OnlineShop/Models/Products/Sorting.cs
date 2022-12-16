@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Models.Products
 {
-
     public enum Sorting
     {
         Unknown = 0,

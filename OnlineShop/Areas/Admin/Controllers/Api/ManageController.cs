@@ -39,7 +39,5 @@
             var model = new ManageStoreResponceModel() { Status = result.ToString() };
             return model;
         }
-
-        
     }
 }

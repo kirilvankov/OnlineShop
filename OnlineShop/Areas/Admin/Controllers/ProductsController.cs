@@ -61,14 +61,12 @@
                     Name = c.Name,
                     ParentId = c.ParentId
                 }).ToList()
-
             };
 
             return View(model);
         }
         public async Task<IActionResult> Add(CancellationToken cancellationToken)
         {
-
             return View(new ProductFormModel
             {
                 Categories = await GetCategories(cancellationToken)
@@ -78,7 +76,6 @@
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormModel product, CancellationToken cancellationToken)
         {
-            
             if (product.Image == null && string.IsNullOrEmpty(product.ImageUrl))
             {
                 ModelState.AddModelError("Image", "Field image is required when imageUrl is empty!");
@@ -161,6 +158,7 @@
             await _productService.DeleteAsync(id, cancellationToken);
             return RedirectToAction(nameof(All));
         }
+
         private async Task<IEnumerable<ProductCategoriesViewModel>> GetCategories(CancellationToken cancellationToken)
         {
             var categories = await _categoryService.GetAllCategories(cancellationToken);

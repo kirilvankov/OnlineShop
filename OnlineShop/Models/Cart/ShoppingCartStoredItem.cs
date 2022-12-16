@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Models.Cart
 {
-
     public class ShoppingCartStoredItem
     {
         public int ProductId { get; set; }

@@ -60,10 +60,8 @@
                 }).ToList()
 
             };
-
             
             return View(test);
-            
         }
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {

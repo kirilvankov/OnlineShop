@@ -1,7 +1,6 @@
 ﻿namespace OnlineShop.Models.User
 {
     using OnlineShop.Models.Address;
-    using OnlineShop.Services.Models;
 
     public class OrderUserViewModel
     {

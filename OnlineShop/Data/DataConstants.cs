@@ -1,10 +1,5 @@
 ﻿namespace OnlineShop.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     public class DataConstants
     {
         public class User
@@ -29,7 +24,7 @@
         public class OrderProduct
         {
             public const int QuantityMinValue = 1;
-            public const int QuantityMaxValue = int.MaxValue;
+            public const int QuantityMaxValue = 25;
         }
         public class Store
         {

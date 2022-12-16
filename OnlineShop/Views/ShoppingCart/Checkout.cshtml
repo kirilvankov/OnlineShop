@@ -46,7 +46,6 @@
             </div>
         </div>
         <div class="col-lg-8">
-
             @foreach (var item in Model.Cart.StoredItems)
             {
                 <div class="row">
@@ -59,18 +58,14 @@
                 </div>
                 <hr />
             }
-
             <div class="data-table bottom">
                 <div class="row text-right offset-9">Total Price: @Model.Cart.TotalPrice</div>
             </div>
             <br />
-
             <div class="offset-9">
                 <button id="paymentBtn" class="btn btn-outline-primary">Payment</button>
             </div>
-
         </div>
-
     </div>
 
     <div id="payment" class="container offset-3">

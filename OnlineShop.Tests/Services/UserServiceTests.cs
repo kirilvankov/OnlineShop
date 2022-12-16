@@ -1,17 +1,14 @@
 ﻿namespace OnlineShop.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using OnlineShop.Data.Models;
-    using OnlineShop.Data;
-    using OnlineShop.Tests.Mocks;
-    using OnlineShop.Services;
+
     using FluentAssertions;
+
+    using OnlineShop.Data;
+    using OnlineShop.Data.Models;
+    using OnlineShop.Services;
     using OnlineShop.Services.Models;
-    using static OnlineShop.Data.DataConstants;
+    using OnlineShop.Tests.Mocks;
 
     public class UserServiceTests
     {

@@ -72,14 +72,12 @@
                     Name = c.Name,
                     ParentId = c.ParentId
                 }).ToList()
-
             };
 
             return View(model);
         }
         public async Task<IActionResult> Add(CancellationToken cancellationToken)
         {
-
             return View(new ProductFormModel
             {
                 Categories = await GetCategories(cancellationToken)
@@ -166,6 +164,7 @@
                 ImageUrl = result.ImageUrl,
                 Category = result.Category,
             };
+
             return View(viewModel);
         }
 

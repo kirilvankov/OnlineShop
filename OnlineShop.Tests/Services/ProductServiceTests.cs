@@ -187,7 +187,6 @@
             //Act
             var result = await productService.GetByIdAsync(3, CancellationToken.None);
 
-
             //Assert
             result.Should()
                 .NotBeNull()
@@ -235,7 +234,6 @@
                 CategoryId = 2,
             });
             dbContext.SaveChanges();
-
 
             var productService = new ProductService(dbContext, _categoryServiceMock.Object, _webHostEnvironmentMock.Object);
 
@@ -320,7 +318,6 @@
             //Act
             var result = await productService.GetAllAsync(model, CancellationToken.None);
 
-
             //Assert
             result.Products.Should()
                 .NotBeEmpty()
@@ -394,7 +391,6 @@
 
             //Act
             var result = await productService.GetAllAsync(model, CancellationToken.None);
-
 
             //Assert
             result.Products.Should()
@@ -562,7 +558,6 @@
             //Act
             var result = await productService.GetAllAsync(model, CancellationToken.None);
 
-
             //Assert
             result.Products.Should()
                 .NotBeEmpty()
@@ -650,7 +645,6 @@
 
             //Act
             var result = await productService.GetAllPerStoreAsync(model, 1, CancellationToken.None);
-
 
             //Assert
             result.Products.Should()

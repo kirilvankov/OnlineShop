@@ -13,13 +13,11 @@
             <h5>Your cart is Empty</h5>
             <a href="/Products/All" class="btn-link">View all products</a>
         </div>
-
     </div>
 }
 else
 {
     <div class="col-md-8 offset-2">
-
         @foreach (var item in Model.StoredItems)
         {
             <div class="row">
@@ -36,13 +34,10 @@ else
             </div>
             <hr />
         }
-
         <div class="data-table bottom">
             <div class="row text-right offset-9">Total Price: @Model.TotalPrice <i class="bi bi-currency-euro"></i></div>
         </div>
-
     </div>
-
     <br />
     <hr />
     <div class="row">

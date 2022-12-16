@@ -63,7 +63,6 @@
                 .NotBeEmpty()
                 .And.HaveCount(3)
                 .And.AllBeAssignableTo<CategoryDto>();
-
         }
 
         [Fact]

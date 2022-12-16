@@ -78,6 +78,7 @@
             {
                 await _userManager.RemoveFromRoleAsync(user, role.Name);
             }
+
             return store.Status;
         }
 

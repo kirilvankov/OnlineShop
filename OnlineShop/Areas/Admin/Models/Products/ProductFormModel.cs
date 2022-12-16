@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Areas.Admin.Models.Products
 {
-
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 

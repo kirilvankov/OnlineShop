@@ -1,6 +1,5 @@
 ﻿namespace OnlineShop.Data.Models
 {
-
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,7 +23,5 @@
 
         [Required]
         public virtual OrderEntity Order { get; set; }
-
-
     }
 }

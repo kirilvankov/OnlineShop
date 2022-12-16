@@ -20,6 +20,5 @@
 
         public List<ProductDto> Products { get; set; }
         public List<CategoryDto> Categories { get; set; }
-
     }
 }
