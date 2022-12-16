@@ -81,8 +81,7 @@ namespace OnlineShop
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.PrepareAdmin();
-            app.CreateShopOwner();
+            app.PrepareDatabase();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
