@@ -31,7 +31,7 @@
     public class StoreControllerTests 
     {
         [Fact]
-        public async Task Apply_ReturnsAViewResult()
+        public void Apply_ReturnsAViewResult()
         {
             // Arrange
             var storeServiceMock = new Mock<IStoreService>();
@@ -39,7 +39,7 @@
             var controller = new StoreController(storeServiceMock.Object);
 
             // Act
-            var result = await controller.Apply();
+            var result = controller.Apply();
 
             // Assert
             Assert.IsType<ViewResult>(result);

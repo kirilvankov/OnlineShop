@@ -134,9 +134,9 @@
 
             var model = _mapper.Map<AddressInfoDto>(input); 
 
-            if (input.IsUserAddress)
+            if (input.IsPrimary)
             {
-                _userService.SetUserAddress(model, userId);
+                _userService.SetUserPrimaryAddress(model, userId);
                 _shoppingCartService.SetOrderAddress(model);
             }
             else

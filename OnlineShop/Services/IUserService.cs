@@ -9,6 +9,6 @@
     {
         Task<OrderUserDetailsDto> GetUserDetails(string userId, CancellationToken cancellationToken);
 
-        void SetUserAddress(AddressInfoDto address, string userId);
+        void SetUserPrimaryAddress(AddressInfoDto address, string userId);
     }
 }

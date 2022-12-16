@@ -12,6 +12,7 @@
         public ApplicationUser()
         {
             Orders = new HashSet<OrderEntity>();
+            Addresses = new HashSet<AddressInfoEntity>();
         }
         [Required]
         [MaxLength(FirstNameMaxLength)]
@@ -23,6 +24,6 @@
 
         public virtual ICollection<OrderEntity> Orders { get; set; }
 
-        public virtual AddressInfoEntity Address { get; set; }
+        public virtual ICollection<AddressInfoEntity> Addresses { get; set; }
     }
 }

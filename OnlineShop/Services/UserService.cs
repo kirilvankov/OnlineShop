@@ -24,23 +24,23 @@
                Id = x.Id,
                FirstName = x.FirstName,
                LastName = x.LastName,
-               AddressInfo = new AddressInfoDto()
+               AddressInfo = x.Addresses.Where(x => x.IsPrimary == true).Select(x => new AddressInfoDto()
                {
-                   AddressLine1 = x.Address.AddressLine1,
-                   AddressLine2 = x.Address.AddressLine2,
-                   PhoneNumber = x.Address.PhoneNumber,
-                   PostCode = x.Address.PostCode,
-                   Email = x.Address.Email,
-                   City = x.Address.City,
-                   LocationLat = x.Address.LocationLat,
-                   LocationLng = x.Address.LocationLng,
-               },
+                   AddressLine1 = x.AddressLine1,
+                   AddressLine2 = x.AddressLine2,
+                   PhoneNumber = x.PhoneNumber,
+                   PostCode = x.PostCode,
+                   Email = x.Email,
+                   City = x.City,
+                   LocationLat = x.LocationLat,
+                   LocationLng = x.LocationLng,
+               }).FirstOrDefault(),
            }).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public void SetUserAddress(AddressInfoDto address, string userId)
+        public void SetUserPrimaryAddress(AddressInfoDto address, string userId)
         {
-            var addressUser = _dbContext.AddressInfo.Where(x => x.User.Id == userId).FirstOrDefault();
+            var addressUser = _dbContext.AddressInfo.Where(x => x.User.Id == userId && x.IsPrimary == true).FirstOrDefault();
             var addressinfo = new AddressInfoEntity()
             {
                 AddressLine1 = address.AddressLine1,
@@ -50,10 +50,11 @@
                 PostCode = address.PostCode,
                 Email = address.Email,
                 UserId = userId,
+                IsPrimary= address.IsPrimary,
                 
             };
 
-            if (address.IsUserAddress)
+            if (address.IsPrimary)
             {
                 if (addressUser == null)
                 {
@@ -68,7 +69,7 @@
                     addressUser.City = address.City;
                     addressUser.PostCode = address.PostCode;
                     addressUser.Email = address.Email;
-                    
+                    addressUser.IsPrimary= address.IsPrimary;
                 }
             }
             

@@ -17,6 +17,6 @@
         public double? LocationLat { get; set; }
 
         public double? LocationLng { get; set; }
-        public bool IsUserAddress { get; set; }
+        public bool IsPrimary { get; set; }
     }
 }

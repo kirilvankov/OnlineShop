@@ -55,12 +55,12 @@
                 Email = "test@test.com",
                 LocationLat = null,
                 LocationLng = null,
-                IsUserAddress = true
+                IsPrimary = true
             };
 
             //Act
-            userService.SetUserAddress(address, userId);
-            address.IsUserAddress = false;
+            userService.SetUserPrimaryAddress(address, userId);
+            address.IsPrimary = false;
 
             //Assert
             var actual = await userService.GetUserDetails(userId, CancellationToken.None);
@@ -88,12 +88,12 @@
                 Email = "test@test.com",
                 LocationLat = null,
                 LocationLng = null,
-                IsUserAddress = true
+                IsPrimary = true
             };
 
             //Act
-            userService.SetUserAddress(address, userId);
-            address.IsUserAddress = false;
+            userService.SetUserPrimaryAddress(address, userId);
+            address.IsPrimary = false;
 
             //Assert
             var actual = await userService.GetUserDetails(userId, CancellationToken.None);

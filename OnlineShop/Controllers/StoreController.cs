@@ -25,7 +25,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Apply()
+        public IActionResult Apply()
         {
             return View();
         }

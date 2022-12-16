@@ -20,36 +20,36 @@
             _customWebApplicationFactory = customWebApplicationFactory;
         }
 
-        [Theory]
-        [InlineData("/")]
-        [InlineData("/Products/All")]
-        [InlineData("/Products/Details/1")]
-        [InlineData("/Store/Apply")]
-        public async Task AllShouldReturnNotEmptyResponse(string url)
-        {
-            //Arrange
-            var client = _customWebApplicationFactory.CreateClient();
-            //Act
-            var response = await client.GetAsync(url);
+        //[Theory]
+        //[InlineData("/")]
+        //[InlineData("/Products/All")]
+        //[InlineData("/Products/Details/1")]
+        ////[InlineData("/Store/Apply")]
+        //public async Task AllShouldReturnNotEmptyResponse(string url)
+        //{
+        //    //Arrange
+        //    var client = _customWebApplicationFactory.CreateClient();
+        //    //Act
+        //    var response = await client.GetAsync(url);
 
-            //Assert
-            Assert.NotNull(response);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-                
-        [Fact]
-        public async Task DetailsShouldReturnNotFoundIfProductNotExist()
-        {
-            //Arrange
-            var client = _customWebApplicationFactory.CreateClient();
+        //    //Assert
+        //    Assert.NotNull(response);
+        //    response.StatusCode.Should().Be(HttpStatusCode.OK);
+        //}
 
-            //Act
-            var response = await client.GetAsync("/Products/Details/-1");
+        //[Fact]
+        //public async Task DetailsShouldReturnNotFoundIfProductNotExist()
+        //{
+        //    //Arrange
+        //    var client = _customWebApplicationFactory.CreateClient();
 
-            //Assert
-            Assert.NotNull(response);
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        //    //Act
+        //    var response = await client.GetAsync("/Products/Details/-1");
 
-        }
+        //    //Assert
+        //    Assert.NotNull(response);
+        //    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        //}
     }
 }
