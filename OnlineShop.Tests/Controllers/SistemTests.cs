@@ -24,7 +24,7 @@
         //[InlineData("/")]
         //[InlineData("/Products/All")]
         //[InlineData("/Products/Details/1")]
-        ////[InlineData("/Store/Apply")]
+        //[InlineData("/Store/Apply")]
         //public async Task AllShouldReturnNotEmptyResponse(string url)
         //{
         //    //Arrange
