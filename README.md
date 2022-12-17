@@ -1,12 +1,12 @@
-# OnlineShop
+# Project Introduction
 
-Project Introduction
+
 OnlineShop is my defense project for ASP.NET Core course at SoftUni (June-August 2021). Project is built on ASP.NET CORE MVC - Framework.
 It is an application for selling various products.
 
 # Used Roles
 There are three roles in the application
-Admin, Shop Owner, and User
+Administrator, Shop Owner, and User
 
 # Overview
 Users can add products to their cart and shop.
